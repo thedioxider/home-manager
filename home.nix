@@ -1,6 +1,9 @@
 { lib, pkgs, ... }: {
   home = {
-    packages = with pkgs; [ kdePackages.filelight ];
+    packages = with pkgs; [
+      kdePackages.filelight
+      telegram-desktop
+    ];
 
     username = "dio";
     homeDirectory = "/home/dio";
