@@ -1,19 +1,15 @@
 { lib, pkgs, ... }: {
   imports = [
+    ### Programs & Environment
+    ./env.nix
+
+    ### Dependencies for correct work of neovim distro
     ./neovim.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
 
   home = {
-    packages = with pkgs; [
-      kitty
-      chezmoi
-      kdePackages.filelight
-      telegram-desktop
-      spotify
-    ];
-
     username = "dio";
     homeDirectory = "/home/dio";
 
