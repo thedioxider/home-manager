@@ -1,8 +1,17 @@
 { lib, pkgs, ... }: {
+  imports = [
+    ./neovim.nix
+  ];
+
+  nixpkgs.config.allowUnfree = true;
+
   home = {
     packages = with pkgs; [
+      kitty
+      chezmoi
       kdePackages.filelight
       telegram-desktop
+      spotify
     ];
 
     username = "dio";
