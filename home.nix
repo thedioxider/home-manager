@@ -5,6 +5,9 @@
 
     ### Dependencies for correct work of neovim distro
     ./neovim.nix
+
+    ### Hyprland
+    # ./hyprland.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
