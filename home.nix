@@ -5,6 +5,9 @@
 
     ### Dependencies for correct work of neovim distro
     ./neovim.nix
+
+    ### Hyprland
+    ./hyprland
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
