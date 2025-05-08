@@ -7,7 +7,7 @@
     ./neovim.nix
 
     ### Hyprland
-    # ./hyprland.nix
+    ./hyprland
   ];
 
   nixpkgs.config.allowUnfree = true;

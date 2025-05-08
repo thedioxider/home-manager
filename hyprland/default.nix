@@ -1,7 +1,21 @@
 { lib, pkgs, ... }: {
-  imports = [];
+  imports = [
+    ./hypr.nix
+  ];
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    package = pkgs.hyprland;
+    xwayland.enable = true;
+
+    # use USWM instead
+    systemd.enable = false;
+  };
 
   home.packages = with pkgs; [
+    hyprland-qtutils
+    hyprland-protocols
+
     # terminal
     kitty
 
@@ -23,12 +37,4 @@
 
   # lock screen
   # programs.hyprlock.enable = true;
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-    xwayland.enable = true;
-
-    systemd.enable = true;
-  };
 }
