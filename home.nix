@@ -7,7 +7,9 @@
     ./neovim.nix
   ];
 
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+    "spotify" "vscode"
+  ];
 
   home = {
     username = "dio";
@@ -16,6 +18,7 @@
     stateVersion = "24.11";
   };
 
+  # services.home-manager.autoExpire
   nix.gc = {
     automatic = true;
     frequency = "weekly";
