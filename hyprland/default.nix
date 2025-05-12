@@ -1,6 +1,7 @@
 { lib, pkgs, ... }: {
   imports = [
     ./hypr.nix
+    ./runner.nix
   ];
 
   wayland.windowManager.hyprland = {
