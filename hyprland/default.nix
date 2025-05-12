@@ -1,8 +1,5 @@
 { lib, pkgs, ... }: {
-  imports = [
-    ./hypr.nix
-    ./runner.nix
-  ];
+  imports = [ ./hypr.nix ./runner.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -21,6 +18,7 @@
     kitty
   ];
 
+  services.hyprpolkitagent.enable = true;
 
   # statusbar
   # programs.waybar.enable = true;

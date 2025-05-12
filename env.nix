@@ -12,10 +12,12 @@
     thunderbird
     bitwarden-desktop
     bitwarden-menu
+    vscode
   ];
 
   programs = {
-    yazi                .enable = true;
-    firefox             .enable = true;
+    yazi.enable = true;
+    firefox.enable = true;
+    tealdeer.enable = true;
   };
 }

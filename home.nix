@@ -10,9 +10,8 @@
     ./hyprland
   ];
 
-  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
-    "spotify" "vscode"
-  ];
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [ "spotify" "vscode" ];
 
   home = {
     username = "dio";

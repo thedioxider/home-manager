@@ -4,9 +4,5 @@
     recursive = true;
   };
 
-  wayland.windowManager.hyprland.settings = {
-    source = [
-      "./core.conf"
-    ];
-  };
+  wayland.windowManager.hyprland.settings = { source = [ "./core.conf" ]; };
 }
