@@ -7,6 +7,7 @@ in
   home.packages = with pkgs; [
     neovim-nightly
     luajit
+    cargo
 
     # required lazyvim dependencies
     gcc git tree-sitter

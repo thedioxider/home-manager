@@ -18,8 +18,6 @@
 
     # terminal
     kitty
-
-    # other
   ];
 
 
