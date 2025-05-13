@@ -13,6 +13,8 @@
     bitwarden-desktop
     bitwarden-menu
     vscode
+    blender
+    obsidian
   ];
 
   programs = {
