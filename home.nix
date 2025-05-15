@@ -11,7 +11,15 @@
   ];
 
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [ "spotify" "vscode" "obsidian" ];
+    builtins.elem (lib.getName pkg) [
+      "spotify"
+      "vscode"
+      "obsidian"
+      "blender"
+      "cuda_cudart"
+      "cuda_nvcc"
+      "cuda_cccl"
+    ];
 
   home = {
     username = "dio";

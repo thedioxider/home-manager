@@ -12,14 +12,19 @@
     thunderbird
     bitwarden-desktop
     bitwarden-menu
-    vscode
-    blender
+    (blender.override { cudaSupport = true; })
     obsidian
+    texlive.combined.scheme-full
   ];
 
   programs = {
     yazi.enable = true;
     firefox.enable = true;
+    vscode = {
+      enable = true;
+      # package = pkgs.vscodium;
+    };
     tealdeer.enable = true;
+    pandoc.enable = true;
   };
 }
