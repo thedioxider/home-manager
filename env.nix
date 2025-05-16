@@ -1,4 +1,8 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, ... }:
+let nix-flatpak = builtins.getFlake "github:gmodena/nix-flatpak";
+in {
+  imports = [ nix-flatpak.homeManagerModules.nix-flatpak ];
+
   ### Programs & Environment
   home.packages = with pkgs; [
     kitty
@@ -15,6 +19,7 @@
     (blender.override { cudaSupport = true; })
     obsidian
     texlive.combined.scheme-full
+    findutils.locate
   ];
 
   programs = {
@@ -27,4 +32,7 @@
     tealdeer.enable = true;
     pandoc.enable = true;
   };
+
+  services.flatpak.enable = true;
+  services.flatpak.packages = [ "app.zen_browser.zen" ];
 }
