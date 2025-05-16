@@ -1,8 +1,10 @@
 { config, pkgs, ... }: {
-  xdg.configFile.hypr = {
-    source = ./config/hypr;
-    recursive = true;
+  wayland.windowManager.hyprland.settings = {
+    source = [ "./land/core.conf" ];
   };
 
-  wayland.windowManager.hyprland.settings = { source = [ "./core.conf" ]; };
+  xdg.configFile."hypr/land" = {
+    source = config.lib.file.mkOutOfStoreSymlink ./config/hypr;
+    recursive = true;
+  };
 }
