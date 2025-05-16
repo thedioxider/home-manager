@@ -1,5 +1,5 @@
 { lib, pkgs, ... }: {
-  imports = [ ./hypr.nix ./runner.nix ];
+  imports = [ ./hypr.nix ./runner.nix ./statbar.nix ];
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -16,22 +16,10 @@
 
     # terminal
     kitty
+
+    # file manager
+    yazi
   ];
 
   services.hyprpolkitagent.enable = true;
-
-  # statusbar
-  # programs.waybar.enable = true;
-
-  # launcher
-  # programs.rofi.enable = true;
-
-  # notification manager
-  # services.dunst.enable = true;
-
-  # file manager
-  # programs.yazi.enable = true;
-
-  # lock screen
-  # programs.hyprlock.enable = true;
 }
