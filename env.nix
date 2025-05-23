@@ -23,6 +23,7 @@ in {
   ];
 
   programs = {
+    home-manager.enable = true;
     yazi.enable = true;
     firefox.enable = true;
     vscode = {
