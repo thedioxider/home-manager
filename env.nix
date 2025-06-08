@@ -20,6 +20,8 @@ in {
     obsidian
     texlive.combined.scheme-full
     findutils.locate
+    bluez
+    blueman
   ];
 
   programs = {
