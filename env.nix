@@ -38,4 +38,15 @@ in {
 
   services.flatpak.enable = true;
   services.flatpak.packages = [ "app.zen_browser.zen" ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "spotify"
+      "vscode"
+      "obsidian"
+      "blender"
+      "cuda_cudart"
+      "cuda_nvcc"
+      "cuda_cccl"
+    ];
 }
