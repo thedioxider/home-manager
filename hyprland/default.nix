@@ -17,8 +17,9 @@
     # terminal
     kitty
 
-    # file manager
+    # file managers
     yazi
+    kdePackages.dolphin
   ];
 
   services.hyprpolkitagent.enable = true;
