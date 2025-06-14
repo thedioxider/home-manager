@@ -5,7 +5,7 @@ let
   neovim-nightly = neovim-nightly-flake.packages.${pkgs.system}.default;
 in {
   home.packages = with pkgs; [
-    neovim-nightly
+    neovim
     luajit
     cargo
 
