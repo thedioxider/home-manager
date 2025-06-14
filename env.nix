@@ -22,6 +22,10 @@ in {
     findutils.locate
     bluez
     blueman
+    arduino-ide
+    bottles
+    obs-studio
+    inkscape
   ];
 
   programs = {
@@ -38,6 +42,10 @@ in {
 
   services.flatpak.enable = true;
   services.flatpak.packages = [ "app.zen_browser.zen" ];
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
+  };
 
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
