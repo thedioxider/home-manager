@@ -3,6 +3,21 @@ let nix-flatpak = builtins.getFlake "github:gmodena/nix-flatpak";
 in {
   imports = [ nix-flatpak.homeManagerModules.nix-flatpak ];
 
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (lib.getName pkg) [
+      "spotify"
+      "vscode"
+      "obsidian"
+      "blender"
+      "cuda_cudart"
+      "cuda_nvcc"
+      "cuda_cccl"
+      "android-studio-stable"
+      "steam"
+      "steam-unwrapped"
+      "aseprite"
+    ];
+
   ### Programs & Environment
   home.packages = with pkgs; [
     kitty
@@ -25,7 +40,16 @@ in {
     arduino-ide
     bottles
     obs-studio
+    adwaita-icon-theme
     inkscape
+    vlc
+    rpi-imager
+    nmap
+    amneziawg-go
+    amneziawg-tools
+    android-studio
+    steam
+    aseprite
   ];
 
   programs = {
@@ -38,6 +62,8 @@ in {
     };
     tealdeer.enable = true;
     pandoc.enable = true;
+    nix-your-shell.enable = true;
+    nix-your-shell.enableFishIntegration = true;
   };
 
   services.flatpak.enable = true;
@@ -46,15 +72,4 @@ in {
     enable = true;
     tray.enable = true;
   };
-
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
-      "spotify"
-      "vscode"
-      "obsidian"
-      "blender"
-      "cuda_cudart"
-      "cuda_nvcc"
-      "cuda_cccl"
-    ];
 }
