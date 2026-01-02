@@ -13,8 +13,6 @@
   home = {
     username = "dio";
     homeDirectory = "/home/dio";
-
-    stateVersion = "24.11";
   };
 
   # services.home-manager.autoExpire
@@ -24,4 +22,6 @@
     persistent = true;
     options = "--delete-older-than 30d";
   };
+
+  home.stateVersion = "25.11";
 }

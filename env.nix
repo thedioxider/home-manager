@@ -1,8 +1,4 @@
-{ lib, pkgs, ... }:
-let nix-flatpak = builtins.getFlake "github:gmodena/nix-flatpak";
-in {
-  imports = [ nix-flatpak.homeManagerModules.nix-flatpak ];
-
+{ lib, pkgs, ... }: {
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
       "spotify"
