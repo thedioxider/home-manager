@@ -6,7 +6,10 @@
 
   programs.waybar = {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+      target = "wayland-session@Hyprland.target";
+    };
   };
 
   xdg.configFile.waybar = {
