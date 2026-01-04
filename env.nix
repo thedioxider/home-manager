@@ -62,8 +62,14 @@
     nix-your-shell.enableFishIntegration = true;
   };
 
-  services.flatpak.enable = true;
-  services.flatpak.packages = [ "app.zen_browser.zen" ];
+  services.flatpak = {
+    enable = true;
+    packages = [ "app.zen_browser.zen" ];
+    update.auto = {
+      enable = true;
+      onCalendar = "daily";
+    };
+  };
   services.syncthing = {
     enable = true;
     tray.enable = true;
