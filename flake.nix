@@ -8,6 +8,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      # doesn't work on unstable
+      inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:

@@ -1,11 +1,8 @@
-{ lib, pkgs, ... }:
-let
-  neovim-nightly-flake =
-    builtins.getFlake "github:nix-community/neovim-nightly-overlay";
-  neovim-nightly = neovim-nightly-flake.packages.${pkgs.system}.default;
+{ lib, pkgs, inputs, ... }:
+let neovim-nightly = inputs.neovim-nightly.packages.${pkgs.system}.default;
 in {
   home.packages = with pkgs; [
-    neovim
+    neovim-nightly
     luajit
     cargo
 
