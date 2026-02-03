@@ -1,18 +1,20 @@
 { lib, pkgs, ... }: {
   nixpkgs.config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) [
+    (builtins.elem (lib.getName pkg) ([
+      "android-studio"
       "spotify"
       "vscode"
       "obsidian"
       "blender"
-      "cuda_cudart"
-      "cuda_nvcc"
-      "cuda_cccl"
       "android-studio-stable"
       "steam"
       "steam-unwrapped"
       "aseprite"
-    ];
+    ] ++ [ "cuda-merged" "libnvjitlink" "libnpp" "cudnn" ]))
+    || (builtins.match "^(cuda_[a-z_]+)|(libcu[a-z]+)$" (lib.getName pkg))
+    != null;
+
+  # nixpkgs.config.cudaSupport = true;
 
   ### Programs & Environment
   home.packages = with pkgs; [
@@ -27,7 +29,7 @@
     thunderbird
     bitwarden-desktop
     bitwarden-menu
-    (blender.override { cudaSupport = true; })
+    blender
     obsidian
     texlive.combined.scheme-full
     findutils.locate
