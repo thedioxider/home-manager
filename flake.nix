@@ -2,9 +2,11 @@
   description = "Home Manager configuration of Diomentia";
 
   inputs = {
-    nixos-config.url = "path:/etc/nixos";
-    nixpkgs.follows = "nixos-config/nixpkgs";
-    home-manager.follows = "nixos-config/home-manager";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 
