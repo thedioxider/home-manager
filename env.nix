@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, inputs, ... }: {
   nixpkgs.config.allowUnfreePredicate = pkg:
     (builtins.elem (lib.getName pkg) ([
       "android-studio"
@@ -48,6 +48,7 @@
     android-studio
     steam
     aseprite
+    inputs.nix-sweep.packages.${pkgs.system}.default
   ];
 
   programs = {

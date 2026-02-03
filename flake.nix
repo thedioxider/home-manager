@@ -7,6 +7,7 @@
       url = "home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-sweep.url = "github:jzbor/nix-sweep";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -45,6 +46,7 @@
 
           ### Other
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
+          inputs.nix-sweep.homeModules.default
         ];
 
         extraSpecialArgs = { inherit inputs; } // args;

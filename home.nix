@@ -4,12 +4,12 @@
     inherit homeDirectory;
   };
 
-  # services.home-manager.autoExpire
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    persistent = true;
-    options = "--delete-older-than 30d";
+  services.nix-sweep = {
+    enable = true;
+    interval = "weekly";
+    removeOlder = "7d";
+    keepMin = 5;
+    keepMax = 30;
   };
 
   home.stateVersion = "25.11";
