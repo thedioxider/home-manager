@@ -1,5 +1,7 @@
 { lib, pkgs, inputs, ... }:
-let neovim-nightly = inputs.neovim-nightly.packages.${pkgs.system}.default;
+let
+  neovim-nightly =
+    inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   home.packages = with pkgs; [
     neovim-nightly

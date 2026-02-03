@@ -48,7 +48,7 @@
     android-studio
     steam
     aseprite
-    inputs.nix-sweep.packages.${pkgs.system}.default
+    inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
   programs = {
