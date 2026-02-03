@@ -19,6 +19,8 @@
         args = rec {
           username = "dio";
           homeDirectory = "/home/${username}";
+          globLink = config: path:
+            config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.hm/${path}";
         };
       in home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

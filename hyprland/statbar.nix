@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, globLink, ... }: {
   # programs.eww = {
   #   enable = true;
   #   configDir = ./config/eww;
@@ -13,7 +13,7 @@
   };
 
   xdg.configFile.waybar = {
-    source = config.lib.file.mkOutOfStoreSymlink ./config/waybar;
+    source = globLink config "hyprland/config/waybar";
     recursive = true;
   };
 

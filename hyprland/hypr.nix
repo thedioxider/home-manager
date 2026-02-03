@@ -1,10 +1,10 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, globLink, ... }: {
   wayland.windowManager.hyprland.settings = {
     source = [ "./land/core.conf" ];
   };
 
   xdg.configFile."hypr/land" = {
-    source = config.lib.file.mkOutOfStoreSymlink ./config/hypr;
+    source = globLink config "hyprland/config/hypr";
     recursive = true;
   };
 }
