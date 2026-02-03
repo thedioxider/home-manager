@@ -8,12 +8,17 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
   };
 
-  outputs = { nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      homeConfigurations.dio = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.dio = let
+        args = rec {
+          username = "dio";
+          homeDirectory = "/home/${username}";
+        };
+      in home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
@@ -33,7 +38,7 @@
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
         ];
 
-        extraSpecialArgs = inputs;
+        extraSpecialArgs = { inherit inputs; } // args;
       };
     };
 }

@@ -1,7 +1,7 @@
-{ lib, pkgs, ... }: {
+{ lib, pkgs, username, homeDirectory, ... }: {
   home = {
-    username = "dio";
-    homeDirectory = "/home/dio";
+    inherit username;
+    inherit homeDirectory;
   };
 
   # services.home-manager.autoExpire
