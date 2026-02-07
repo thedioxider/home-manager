@@ -1,3 +1,4 @@
+# TODO: modifiable way to fetch the live configs from github
 { lib, pkgs, inputs, ... }:
 let
   neovim-nightly =

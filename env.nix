@@ -61,8 +61,6 @@
     };
     tealdeer.enable = true;
     pandoc.enable = true;
-    nix-your-shell.enable = true;
-    nix-your-shell.enableFishIntegration = true;
   };
 
   services.flatpak = {

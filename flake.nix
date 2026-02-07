@@ -14,6 +14,15 @@
       # doesn't work on unstable
       inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
     };
+    hyprland = {
+      url = "github:hyprwm/Hyprland/v0.53.3";
+      # does not work on unstable yet
+      inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
+    };
+    hyprland-split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs:
@@ -47,6 +56,7 @@
           ### Other
           inputs.nix-flatpak.homeManagerModules.nix-flatpak
           inputs.nix-sweep.homeModules.default
+          inputs.hyprland.homeManagerModules.default
         ];
 
         extraSpecialArgs = { inherit inputs; } // args;
