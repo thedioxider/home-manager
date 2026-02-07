@@ -1,4 +1,11 @@
-{ lib, pkgs, username, homeDirectory, ... }: {
+{
+  lib,
+  pkgs,
+  username,
+  homeDirectory,
+  ...
+}:
+{
   home = {
     inherit username;
     inherit homeDirectory;

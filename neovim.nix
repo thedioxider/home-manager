@@ -1,9 +1,14 @@
 # TODO: modifiable way to fetch the live configs from github
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
-  neovim-nightly =
-    inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
-in {
+  neovim-nightly = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
+in
+{
   home.packages = with pkgs; [
     neovim-nightly
     luajit
@@ -24,5 +29,7 @@ in {
     python3
   ];
 
-  home.sessionVariables = { EDITOR = "nvim"; };
+  home.sessionVariables = {
+    EDITOR = "nvim";
+  };
 }

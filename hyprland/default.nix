@@ -1,5 +1,10 @@
-{ lib, pkgs, ... }: {
-  imports = [ ./hypr.nix ./runner.nix ./statbar.nix ];
+{ lib, pkgs, ... }:
+{
+  imports = [
+    ./hypr.nix
+    ./runner.nix
+    ./statbar.nix
+  ];
 
   wayland.windowManager.hyprland = {
     enable = true;

@@ -1,7 +1,17 @@
-{ config, pkgs, lib, globLink, inputs, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  globLink,
+  inputs,
+  ...
+}:
+{
   wayland.windowManager.hyprland = {
     systemd.enable = false;
-    settings = { source = [ "./land/core.conf" ]; };
+    settings = {
+      source = [ "./land/core.conf" ];
+    };
     plugins = [
       inputs.hyprland-split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];

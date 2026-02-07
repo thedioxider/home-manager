@@ -1,18 +1,32 @@
-{ lib, pkgs, inputs, ... }: {
-  nixpkgs.config.allowUnfreePredicate = pkg:
-    (builtins.elem (lib.getName pkg) ([
-      "android-studio"
-      "spotify"
-      "vscode"
-      "obsidian"
-      "blender"
-      "android-studio-stable"
-      "steam"
-      "steam-unwrapped"
-      "aseprite"
-    ] ++ [ "cuda-merged" "libnvjitlink" "libnpp" "cudnn" ]))
-    || (builtins.match "^(cuda_[a-z_]+)|(libcu[a-z]+)$" (lib.getName pkg))
-    != null;
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    (builtins.elem (lib.getName pkg) (
+      [
+        "android-studio"
+        "spotify"
+        "vscode"
+        "obsidian"
+        "blender"
+        "android-studio-stable"
+        "steam"
+        "steam-unwrapped"
+        "aseprite"
+      ]
+      ++ [
+        "cuda-merged"
+        "libnvjitlink"
+        "libnpp"
+        "cudnn"
+      ]
+    ))
+    || (builtins.match "^(cuda_[a-z_]+)|(libcu[a-z]+)$" (lib.getName pkg)) != null;
 
   # nixpkgs.config.cudaSupport = true;
 

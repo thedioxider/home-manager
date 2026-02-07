@@ -1,4 +1,11 @@
-{ config, lib, pkgs, globLink, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  globLink,
+  ...
+}:
+{
   # programs.eww = {
   #   enable = true;
   #   configDir = ./config/eww;
