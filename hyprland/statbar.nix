@@ -13,7 +13,7 @@
   };
 
   xdg.configFile.waybar = {
-    source = globLink config "hyprland/config/waybar";
+    source = globLink config "config/waybar";
     recursive = true;
   };
 

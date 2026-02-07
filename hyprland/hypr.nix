@@ -8,7 +8,7 @@
   };
 
   xdg.configFile."hypr/land" = {
-    source = globLink config "hyprland/config/hypr";
+    source = globLink config "config/hypr";
     recursive = true;
   };
 }
