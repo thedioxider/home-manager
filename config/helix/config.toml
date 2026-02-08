@@ -21,6 +21,7 @@ insert-final-newline = true
 default-line-ending = "lf"
 trim-final-newlines = true
 trim-trailing-whitespace = true
+auto-format = true  # :toggle auto-format
 
 [editor.cursor-shape]
 normal = "block"
