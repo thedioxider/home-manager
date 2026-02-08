@@ -99,6 +99,7 @@
           }
           (prettier-lang "html")
           (prettier-lang "css")
+          (prettier-lang "scss")
           (prettier-lang-parser "javascript" "typescript")
           (prettier-lang "typescript")
           (prettier-lang-parser "tsx" "typescript")
