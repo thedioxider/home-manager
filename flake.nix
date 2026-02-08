@@ -58,6 +58,9 @@
             ### Dependencies for correct work of neovim distro
             ./neovim.nix
 
+            ### Helix and languages
+            ./helix.nix
+
             ### Hyprland
             ./hyprland
 

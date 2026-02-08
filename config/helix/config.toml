@@ -1,0 +1,104 @@
+theme = "noctis"
+# theme = "poimandres"
+
+[editor]
+default-yank-register = '"'
+middle-click-paste = false
+
+scroll-lines = 3
+line-number = "relative"
+cursorline = true
+rulers = [80]
+bufferline = "multiple"
+color-modes = true
+
+jump-label-alphabet = "jfkdlsaurieowpqhgytnvmcxzb"
+completion-trigger-len = 1
+completion-replace = true
+end-of-line-diagnostics = "warning"
+
+insert-final-newline = true
+default-line-ending = "lf"
+trim-final-newlines = true
+trim-trailing-whitespace = true
+
+[editor.cursor-shape]
+normal = "block"
+insert = "bar"
+select = "underline"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+center = ["version-control", "spacer", "workspace-diagnostics"]
+right = ["register", "selections", "spacer", "position", "separator", "diagnostics", "file-encoding", "file-type"]
+
+separator = "|"
+mode.normal = "EYE"
+mode.insert = "PEN"
+mode.select = "<~>"
+
+[editor.lsp]
+display-inlay-hints = true
+
+[editor.file-picker]
+git-exclude = false
+
+[editor.auto-save]
+focus-lost = false
+
+[editor.search]
+smart-case = false  # (?i) for case-insensitive, (?-i) for case-sensitive
+
+[editor.whitespace.render]
+space = "all"
+tab = "all"
+nbsp = "all"
+nnbsp = "all"
+tabpad = "all"
+
+[editor.indent-guides]
+render = true
+character = "┊"  # Some characters that work well: "▏", "┆", "┊", "⸽"
+
+[editor.gutters]
+layout = ["diagnostics", "spacer", "diff", "line-numbers", "spacer"]
+line-numbers.min-width = 2
+
+[editor.soft-wrap]
+enable = true
+max-indent-retain = 20
+
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "disable"
+
+
+[keys.normal]
+x = "select_line_below"
+S-x = "select_line_above"
+
+A-h = ":bp"
+A-l = ":bn"
+A-c = ":bc"
+
+# lazygit integration
+C-g = [
+    ":write-all",
+    ":new",
+    ":insert-output lazygit",
+    ":buffer-close!",
+    ":redraw",
+    ":reload-all"
+]
+
+[keys.normal.backspace]
+q = ":q"
+S-q = ":wq"
+S-A-q = ":q!"
+w = ":w"
+S-w = ":wa"
+c = ":config-reload"
+
+[keys.select]
+x = "select_line_below"
+S-x = "select_line_above"

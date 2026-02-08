@@ -28,8 +28,4 @@ in
     ghostscript
     python3
   ];
-
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
 }

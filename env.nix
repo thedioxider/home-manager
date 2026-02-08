@@ -63,6 +63,7 @@
     steam
     aseprite
     inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
+    scooter
   ];
 
   programs = {
@@ -77,16 +78,22 @@
     pandoc.enable = true;
   };
 
-  services.flatpak = {
-    enable = true;
-    packages = [ "app.zen_browser.zen" ];
-    update.auto = {
+  services = {
+    flatpak = {
       enable = true;
-      onCalendar = "daily";
+      packages = [ "app.zen_browser.zen" ];
+      update.auto = {
+        enable = true;
+        onCalendar = "daily";
+      };
+    };
+    syncthing = {
+      enable = true;
+      tray.enable = true;
     };
   };
-  services.syncthing = {
-    enable = true;
-    tray.enable = true;
+
+  home.sessionVariables = {
+    EDITOR = "hx";
   };
 }
