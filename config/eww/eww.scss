@@ -1,0 +1,46 @@
+* {
+  all: unset;
+  font-family:
+    Caskaydia Code,
+    monospace;
+}
+
+tooltip label {
+  font-size: 1.5em;
+  padding: 0.35em;
+  border-radius: 0.5em;
+  background-color: rgba(black, 0.6);
+  color: white;
+}
+
+label.tooltip.binary-clock {
+  font-size: 3em;
+  font-weight: bolder;
+  color: white;
+}
+
+.binary-clock {
+  $particle-size: 6em;
+  $particle-color: #42f566;
+  $particle-radius: 30%;
+  $particle-inactive-opacity: 0.1;
+  $appear-speed: 250ms;
+
+  .bin-grid {
+    margin: 1em;
+  }
+
+  .bin-particle {
+    min-width: $particle-size;
+    min-height: $particle-size;
+    margin: 0.5em;
+    background-color: $particle-color;
+    border-radius: $particle-radius;
+    opacity: $particle-inactive-opacity;
+    transition: opacity $appear-speed ease-in;
+
+    &.visible {
+      opacity: 1;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+;; Binary Clock ;;
+
+(defwindow binary-clock
+  :geometry (geometry
+    :anchor "bottom right")
+  :stacking "bg"
+  :focusable "none"
+  :namespace "binary-clock"
+  (_bin_grid)
+)
+
+(defpoll tz :interval '120m' `timedatectl show | grep Timezone | cut -d'=' -f 2`)
+
+(defwidget _bin_particle [visible]
+  (box :class {'bin-particle' + (visible ? ' visible' : '')})
+)
+
+(defwidget _bin_segment [name value]
+  (box :class "bin-segment ${name}"
+    :orientation "h" :space-evenly true
+    (box :class "bin-subsegment ${name}"
+      :orientation "v" :space-evenly true
+      (_bin_particle :visible { value % 64 / 32 >= 1 })
+      (_bin_particle :visible { value % 32 / 16 >= 1 })
+      (_bin_particle :visible { value % 16 / 8 >= 1 })
+    )
+    (box :class "bin-subsegment ${name}"
+      :orientation "v" :space-evenly true
+      (_bin_particle :visible { value % 8 / 4 >= 1 })
+      (_bin_particle :visible { value % 4 / 2 >= 1 })
+      (_bin_particle :visible { value % 2 / 1 >= 1 })
+    )
+  )
+)
+
+(defwidget _bin_grid []
+  (tooltip
+    (label :class "tooltip binary-clock" :text { formattime(EWW_TIME, '%H:%M:%S', tz) })
+    (box :class "bin-grid"
+      :orientation "h" :space-evenly true
+      (_bin_segment :name "hours" :value { formattime(EWW_TIME, '%H', tz) })
+      (_bin_segment :name "minutes" :value { formattime(EWW_TIME, '%M', tz) })
+      (_bin_segment :name "seconds" :value { formattime(EWW_TIME, '%S', tz) })
+    )
+  )
+)
