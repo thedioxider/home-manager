@@ -7,6 +7,7 @@
 }:
 {
   xdg.configFile."helix/config.toml".source = globLink config "config/helix/config.toml";
+
   programs.helix = {
     enable = true;
 
@@ -35,7 +36,7 @@
 
       # xml
       lemminx
-      libxml2
+      xmlformat
 
       # toml
       taplo
@@ -132,13 +133,9 @@
               "xslt"
               "xsl"
             ];
-            auto-format = true;
+            auto-format = false;
             formatter = {
-              command = "${pkgs.libxml2}/bin/xmllint";
-              args = [
-                "--format"
-                "-"
-              ];
+              command = lib.getExe pkgs.xmlformat;
             };
           }
           {
