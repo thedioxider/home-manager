@@ -13,19 +13,20 @@ tooltip label {
   color: white;
 }
 
-label.tooltip.binary-clock {
+/** Binary Clock **/
+$particle-size: 6em;
+$particle-color: #42f566;
+$particle-radius: 30%;
+$particle-inactive-opacity: 0;
+$appear-speed: 250ms;
+
+tooltip label.binary-clock {
   font-size: 3em;
   font-weight: bolder;
   color: white;
 }
 
 .binary-clock {
-  $particle-size: 6em;
-  $particle-color: #42f566;
-  $particle-radius: 30%;
-  $particle-inactive-opacity: 0.1;
-  $appear-speed: 250ms;
-
   .bin-grid {
     margin: 1em;
   }

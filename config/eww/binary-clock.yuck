@@ -35,7 +35,7 @@
 
 (defwidget _bin_grid []
   (tooltip
-    (label :class "tooltip binary-clock" :text { formattime(EWW_TIME, '%H:%M:%S', tz) })
+    (label :class "binary-clock" :text { formattime(EWW_TIME, '%H:%M:%S', tz) })
     (box :class "bin-grid"
       :orientation "h" :space-evenly true
       (_bin_segment :name "hours" :value { formattime(EWW_TIME, '%H', tz) })
