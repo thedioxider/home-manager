@@ -1,7 +1,9 @@
 {
+  config,
   lib,
   pkgs,
   inputs,
+  globLink,
   ...
 }:
 {
@@ -76,6 +78,11 @@
     };
     tealdeer.enable = true;
     pandoc.enable = true;
+    eww.enable = true;
+  };
+
+  xdg.configFile.eww = {
+    source = globLink config "config/eww";
   };
 
   services = {

@@ -1,16 +1,10 @@
 {
   config,
-  lib,
   pkgs,
   globLink,
   ...
 }:
 {
-  # programs.eww = {
-  #   enable = true;
-  #   configDir = ./config/eww;
-  # };
-
   programs.waybar = {
     enable = true;
     systemd = {
