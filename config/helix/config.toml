@@ -16,12 +16,14 @@ jump-label-alphabet = "jfkdlsaurieowpqhgytnvmcxzb"
 completion-trigger-len = 1
 completion-replace = true
 end-of-line-diagnostics = "warning"
+completion-timeout = 5
+preview-completion-insert = false
 
 insert-final-newline = true
 default-line-ending = "lf"
 trim-final-newlines = true
 trim-trailing-whitespace = true
-auto-format = true  # :toggle auto-format
+auto-format = true              # :toggle auto-format
 
 [editor.cursor-shape]
 normal = "block"
@@ -29,9 +31,24 @@ insert = "bar"
 select = "underline"
 
 [editor.statusline]
-left = ["mode", "spinner", "file-name", "read-only-indicator", "file-modification-indicator"]
+left = [
+  "mode",
+  "spinner",
+  "file-name",
+  "read-only-indicator",
+  "file-modification-indicator",
+]
 center = ["version-control", "spacer", "workspace-diagnostics"]
-right = ["register", "selections", "spacer", "position", "separator", "diagnostics", "file-encoding", "file-type"]
+right = [
+  "register",
+  "selections",
+  "spacer",
+  "position",
+  "separator",
+  "diagnostics",
+  "file-encoding",
+  "file-type",
+]
 
 separator = "|"
 mode.normal = "EYE"
@@ -48,7 +65,7 @@ git-exclude = false
 focus-lost = false
 
 [editor.search]
-smart-case = false  # (?i) for case-insensitive, (?-i) for case-sensitive
+smart-case = false # (?i) for case-insensitive, (?-i) for case-sensitive
 
 [editor.whitespace.render]
 space = "all"
@@ -59,7 +76,7 @@ tabpad = "all"
 
 [editor.indent-guides]
 render = true
-character = "┊"  # Some characters that work well: "▏", "┆", "┊", "⸽"
+character = "┊" # Some characters that work well: "▏", "┆", "┊", "⸽"
 
 [editor.gutters]
 layout = ["diagnostics", "spacer", "diff", "line-numbers", "spacer"]
@@ -84,12 +101,12 @@ A-c = ":bc"
 
 # lazygit integration
 C-g = [
-    ":write-all",
-    ":new",
-    ":insert-output lazygit",
-    ":buffer-close!",
-    ":redraw",
-    ":reload-all"
+  ":write-all",
+  ":new",
+  ":insert-output lazygit",
+  ":buffer-close!",
+  ":redraw",
+  ":reload-all",
 ]
 
 [keys.normal.backspace]
