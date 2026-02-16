@@ -34,6 +34,7 @@
 
   ### Programs & Environment
   home.packages = with pkgs; [
+    python3
     kitty
     trashy
     wl-clipboard
@@ -66,6 +67,9 @@
     aseprite
     inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
     scooter
+    picocom
+    rshell
+    jetbrains.idea-oss
   ];
 
   programs = {

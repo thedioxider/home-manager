@@ -11,13 +11,13 @@ in
 {
   home.packages = with pkgs; [
     neovim-nightly
-    luajit
-    cargo
+    # luajit
+    # cargo
 
     # required lazyvim dependencies
-    gcc
-    git
-    tree-sitter
+    # gcc
+    # git
+    # tree-sitter
 
     #optional lazyvim dependencies
     fd
@@ -25,7 +25,7 @@ in
     ripgrep
     curl
     lazygit
-    ghostscript
-    python3
+    # ghostscript
+    # python3
   ];
 }

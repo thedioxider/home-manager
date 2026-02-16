@@ -10,6 +10,7 @@
 
   programs.helix = {
     enable = true;
+    defaultEditor = true;
 
     # Language Servers & Formatters
     extraPackages = with pkgs; [
@@ -49,8 +50,8 @@
       stylua
 
       # rust
-      rust-analyzer
       clippy
+      rustfmt
 
       # kotlin
       kotlin-language-server
@@ -132,6 +133,8 @@
               "xsd"
               "xslt"
               "xsl"
+              "urdf"
+              "xacro"
             ];
             auto-format = false;
             formatter = {
