@@ -55,6 +55,9 @@
             ### Programs & Environment
             ./env.nix
 
+            ### Fish configs
+            ./fish.nix
+
             ### Dependencies for correct work of neovim distro
             ./neovim.nix
 
