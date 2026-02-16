@@ -74,7 +74,10 @@
 
   programs = {
     home-manager.enable = true;
-    yazi.enable = true;
+    yazi = {
+      enable = true;
+      shellWrapperName = "yy";
+    };
     firefox.enable = true;
     vscode = {
       enable = true;
