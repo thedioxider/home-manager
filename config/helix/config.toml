@@ -112,7 +112,7 @@ C-g = [
 [keys.normal.backspace]
 q = ":q"
 S-q = ":wq"
-S-A-q = ":q!"
+A-q = ":q!"
 w = ":w"
 S-w = ":wa"
 c = ":config-reload"

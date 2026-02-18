@@ -9,7 +9,7 @@
       mv = "mv -i";
       plz = "sudo";
       fm = "yazi";
-      ew = "trash put";
+      ew = "trash-put";
     };
   };
 }
