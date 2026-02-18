@@ -39,6 +39,7 @@
         inherit system;
         overlays = [
           (self: super: {
+            ### Add latest stable channel support
             stable = import inputs.nixpkgs-stable {
               inherit (self.stdenv.hostPlatform) system;
             };
