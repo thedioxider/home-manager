@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     home-manager = {
       url = "home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,12 +13,12 @@
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
       # doesn't work on unstable
-      inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.53.3";
       # does not work on unstable yet
-      inputs.nixpkgs.url = "nixpkgs/nixos-25.11";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
     };
     hyprland-split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
@@ -34,7 +35,16 @@
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          (self: super: {
+            stable = import inputs.nixpkgs-stable {
+              inherit (self.stdenv.hostPlatform) system;
+            };
+          })
+        ];
+      };
     in
     {
       homeConfigurations.dio =
