@@ -36,7 +36,7 @@
   home.packages = with pkgs; [
     python3
     kitty
-    trashy
+    trash-cli
     wl-clipboard
     hyprshot
     chezmoi
