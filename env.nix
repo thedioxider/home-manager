@@ -20,6 +20,7 @@
         "steam"
         "steam-unwrapped"
         "aseprite"
+        "claude-code"
       ]
       ++ [
         "cuda-merged"
@@ -90,6 +91,9 @@
     tealdeer.enable = true;
     pandoc.enable = true;
     eww.enable = true;
+    claude-code = {
+      enable = true;
+    };
   };
 
   xdg.configFile.eww = {
