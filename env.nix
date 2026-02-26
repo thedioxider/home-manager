@@ -70,6 +70,10 @@
     picocom
     rshell
     jetbrains.idea-oss
+    bc
+    xxd
+    hexedit
+    marktext
   ];
 
   programs = {
