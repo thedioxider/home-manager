@@ -27,4 +27,9 @@
   xdg.configFile.eww = {
     source = globLink config "config/eww";
   };
+
+  xdg.configFile.kitty = {
+    source = globLink config "config/kitty";
+    recursive = true;
+  };
 }

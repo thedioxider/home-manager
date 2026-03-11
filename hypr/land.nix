@@ -8,7 +8,6 @@
 }:
 {
   wayland.windowManager.hyprland = {
-    systemd.enable = false;
     settings = {
       source = [ "./land/core.conf" ];
     };
