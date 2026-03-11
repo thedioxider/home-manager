@@ -9,9 +9,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-
-    # use USWM instead
-    systemd.enable = false;
+    systemd.enableXdgAutostart = true;
   };
 
   home.packages = with pkgs; [
