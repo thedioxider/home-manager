@@ -21,4 +21,8 @@
     source = globLink config "config/hypr";
     recursive = true;
   };
+
+  xdg.configFile."hypr/hypridle.conf" = {
+    source = globLink config "config/hypridle.conf";
+  };
 }

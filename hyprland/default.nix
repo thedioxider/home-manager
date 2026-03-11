@@ -27,4 +27,5 @@
   ];
 
   services.hyprpolkitagent.enable = true;
+  services.hypridle.enable = true;
 }
