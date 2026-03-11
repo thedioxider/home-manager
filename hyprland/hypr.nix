@@ -25,4 +25,8 @@
   xdg.configFile."hypr/hypridle.conf" = {
     source = globLink config "config/hypridle.conf";
   };
+
+  xdg.configFile."hypr/hyprlock.conf" = {
+    source = globLink config "config/hyprlock.conf";
+  };
 }
