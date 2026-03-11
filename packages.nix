@@ -1,0 +1,76 @@
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
+    (builtins.elem (lib.getName pkg) (
+      [
+        "android-studio"
+        "spotify"
+        "vscode"
+        "obsidian"
+        "blender"
+        "android-studio-stable"
+        "steam"
+        "steam-unwrapped"
+        "aseprite"
+        "claude-code"
+      ]
+      ++ [
+        "cuda-merged"
+        "libnvjitlink"
+        "libnpp"
+        "cudnn"
+      ]
+    ))
+    || (builtins.match "^(cuda_[a-z_]+)|(libcu[a-z]+)$" (lib.getName pkg)) != null;
+
+  # nixpkgs.config.cudaSupport = true;
+
+  home.packages = with pkgs; [
+    python3
+    kitty
+    trash-cli
+    wl-clipboard
+    hyprshot
+    chezmoi
+    kdePackages.filelight
+    telegram-desktop
+    spotify
+    thunderbird
+    bitwarden-desktop
+    bitwarden-menu
+    blender
+    obsidian
+    texlive.combined.scheme-full
+    findutils.locate
+    bluez
+    blueman
+    arduino-ide
+    bottles
+    obs-studio
+    adwaita-icon-theme
+    inkscape
+    vlc
+    rpi-imager
+    nmap
+    amneziawg-go
+    amneziawg-tools
+    android-studio
+    steam
+    aseprite
+    inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
+    scooter
+    picocom
+    rshell
+    jetbrains.idea-oss
+    bc
+    xxd
+    hexedit
+    marktext
+  ];
+}

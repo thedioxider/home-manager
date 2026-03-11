@@ -63,8 +63,11 @@
             ### Main configurations
             ./home.nix
 
-            ### Programs & Environment
+            ### Environment, Packages, Programs & Services
             ./env.nix
+            ./packages.nix
+            ./programs.nix
+            ./services.nix
 
             ### Fish configs
             ./fish.nix
