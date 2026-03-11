@@ -1,7 +1,7 @@
 { lib, pkgs, ... }:
 {
   imports = [
-    ./hypr.nix
+    ./land.nix
     ./runner.nix
     ./statbar.nix
   ];

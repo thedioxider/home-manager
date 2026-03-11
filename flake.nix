@@ -79,7 +79,7 @@
             ./helix.nix
 
             ### Hyprland
-            ./hyprland
+            ./hypr
 
             ### Other
             inputs.nix-flatpak.homeManagerModules.nix-flatpak
