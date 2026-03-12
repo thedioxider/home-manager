@@ -21,7 +21,7 @@
 
     # file managers
     yazi
-    kdePackages.dolphin
+    nemo-with-extensions
   ];
 
   services.hyprpolkitagent.enable = true;
