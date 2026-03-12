@@ -64,6 +64,9 @@
 
       # dart
       dart
+
+      # qml
+      kdePackages.qtdeclarative
     ];
     languages = {
       language =
@@ -185,6 +188,13 @@
             auto-format = true;
             formatter.command = "${pkgs.libclang}/bin/clang-format";
           }
+          # {
+          #   name = "qml";
+          #   auto-format = true;
+          #   formatter = {
+          #     command = "${pkgs.kdePackages.qtdeclarative}/bin/qmlformat";
+          #   };
+          # }
         ];
       language-server = {
         lemminx = {
