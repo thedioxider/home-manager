@@ -19,5 +19,7 @@
     keepMax = 30;
   };
 
+  # targets.genericLinux.enable = true;
+
   home.stateVersion = "25.11";
 }
