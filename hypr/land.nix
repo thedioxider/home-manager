@@ -16,6 +16,12 @@
     ];
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = [ "hyprland" "gtk" ];
+  };
+
   xdg.configFile."hypr/land" = {
     source = globLink config "config/hypr/land";
     recursive = true;

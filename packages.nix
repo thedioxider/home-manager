@@ -72,5 +72,6 @@
     xxd
     hexedit
     marktext
+    gtk3
   ];
 }
