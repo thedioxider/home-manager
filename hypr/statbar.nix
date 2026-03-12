@@ -22,7 +22,7 @@
     enable = true;
     systemd = {
       enable = true;
-      target = "wayland-session@Hyprland.target";
+      target = "hyprland-session.target";
     };
   };
 
