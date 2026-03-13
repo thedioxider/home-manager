@@ -73,5 +73,7 @@
     hexedit
     marktext
     gtk3
+    gsettings-desktop-schemas
+    libnotify
   ];
 }
