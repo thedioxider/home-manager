@@ -67,6 +67,7 @@
             ./env.nix
             ./packages.nix
             ./programs.nix
+            ./style.nix
             ./services.nix
 
             ### Fish configs

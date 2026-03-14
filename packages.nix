@@ -19,6 +19,7 @@
         "steam-unwrapped"
         "aseprite"
         "claude-code"
+        "zoom"
       ]
       ++ [
         "cuda-merged"
@@ -75,5 +76,6 @@
     gtk3
     gsettings-desktop-schemas
     libnotify
+    zoom-us
   ];
 }
