@@ -11,7 +11,9 @@
 		"custom/reboot",
 		"custom/poweroff"
 	],
-	"modules-center": ["hyprland/window"],
+	"modules-center": [
+		"hyprland/window"
+	],
 	"modules-right": [
 		"network",
 		"battery",
@@ -39,7 +41,7 @@
 	},
 	"custom/lock": {
 		"format": "<span color='#00FFFF'>  </span>",
-		"on-click": "hyprlock",
+		"on-click": "loginctl lock-session",
 		"tooltip": true,
 		"tooltip-format": "Lock Screen"
 	},
@@ -72,7 +74,13 @@
 		"format": "<span color='#28CD41'> {icon} </span>{capacity}% ",
 		"format-charging": " 󱐋{capacity}%",
 		"interval": 30,
-		"format-icons": ["󰂎", "󰁼", "󰁿", "󰂁", "󰁹"],
+		"format-icons": [
+			"󰂎",
+			"󰁼",
+			"󰁿",
+			"󰂁",
+			"󰁹"
+		],
 		"tooltip": true
 	},
 	"pulseaudio": {
