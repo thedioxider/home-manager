@@ -20,6 +20,7 @@
         "aseprite"
         "claude-code"
         "zoom"
+        "idea"
       ]
       ++ [
         "cuda-merged"
@@ -63,16 +64,16 @@
     amneziawg-tools
     android-studio
     steam
-    aseprite
+    pkgs.stable.aseprite
     inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
     scooter
     picocom
     rshell
-    jetbrains.idea-oss
+    jetbrains.idea
     bc
     xxd
     hexedit
-    marktext
+    pkgs.stable.marktext
     gtk3
     gsettings-desktop-schemas
     libnotify
