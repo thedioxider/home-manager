@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, inputs, ... }:
 {
   imports = [
     ./land.nix
@@ -8,6 +8,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.buildPlatform.system}.default;
     xwayland.enable = true;
     systemd.enableXdgAutostart = true;
   };

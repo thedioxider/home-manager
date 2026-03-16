@@ -15,11 +15,7 @@
       # doesn't work on unstable
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.53.3";
-      # does not work on unstable yet
-      inputs.nixpkgs.follows = "nixpkgs-stable";
-    };
+    hyprland.url = "github:hyprwm/Hyprland/v0.54.2";
     hyprland-split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
@@ -35,13 +31,16 @@
     }@inputs:
     let
       system = "x86_64-linux";
+      allowUnfreePredicate = import ./unfree.nix nixpkgs.lib;
       pkgs = import nixpkgs {
         inherit system;
+        config = { inherit allowUnfreePredicate; };
         overlays = [
           (self: super: {
             ### Add latest stable channel support
             stable = import inputs.nixpkgs-stable {
               inherit (self.stdenv.hostPlatform) system;
+              config = { inherit allowUnfreePredicate; };
             };
           })
         ];

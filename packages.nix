@@ -1,36 +1,9 @@
 {
-  lib,
   pkgs,
   inputs,
   ...
 }:
 {
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    (builtins.elem (lib.getName pkg) (
-      [
-        "android-studio"
-        "spotify"
-        "vscode"
-        "obsidian"
-        "blender"
-        "android-studio-stable"
-        "steam"
-        "steam-unwrapped"
-        "aseprite"
-        "claude-code"
-        "zoom"
-        "idea"
-      ]
-      ++ [
-        "cuda-merged"
-        "libnvjitlink"
-        "libnpp"
-        "cudnn"
-      ]
-    ))
-    || (builtins.match "^(cuda_[a-z_]+)|(libcu[a-z]+)$" (lib.getName pkg)) != null;
-
   # nixpkgs.config.cudaSupport = true;
 
   home.packages = with pkgs; [
@@ -44,8 +17,8 @@
     telegram-desktop
     spotify
     thunderbird
-    bitwarden-desktop
-    bitwarden-menu
+    pkgs.stable.bitwarden-desktop
+    pkgs.stable.bitwarden-menu
     blender
     obsidian
     texlive.combined.scheme-full
