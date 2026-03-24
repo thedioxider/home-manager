@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   # TODO: customize GTK/Qt theming
   # TODO: customize cursor theme with home.pointerCursor (needs a theme with both hyprcursor and xcursor formats)
@@ -13,6 +13,7 @@
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
     };
+    gtk4.theme = config.gtk.theme;
     gtk3.bookmarks = [
       "file:///home/dio/Documents"
       "file:///home/dio/Downloads"
