@@ -42,7 +42,7 @@
     scooter
     picocom
     rshell
-    jetbrains.idea
+    jetbrains.idea-oss
     bc
     xxd
     hexedit
@@ -51,5 +51,7 @@
     gsettings-desktop-schemas
     libnotify
     zoom-us
+    vlc
+    kdePackages.gwenview
   ];
 }

@@ -34,7 +34,12 @@
       allowUnfreePredicate = import ./unfree.nix nixpkgs.lib;
       pkgs = import nixpkgs {
         inherit system;
-        config = { inherit allowUnfreePredicate; };
+        config = {
+          inherit allowUnfreePredicate;
+          permittedInsecurePackages = [
+            "openclaw-2026.3.12"
+          ];
+        };
         overlays = [
           (self: super: {
             ### Add latest stable channel support
