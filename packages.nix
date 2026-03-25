@@ -33,8 +33,6 @@
     vlc
     rpi-imager
     nmap
-    amneziawg-go
-    amneziawg-tools
     android-studio
     steam
     pkgs.stable.aseprite
