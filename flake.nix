@@ -2,18 +2,17 @@
   description = "Home Manager configuration of Diomentia";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
+    nixpkgs.url = "nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     home-manager = {
-      url = "home-manager/master";
+      url = "home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-sweep.url = "github:jzbor/nix-sweep";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
-      # doesn't work on unstable
-      inputs.nixpkgs.follows = "nixpkgs-stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland/v0.54.2";
     hyprland-split-monitor-workspaces = {
@@ -42,8 +41,8 @@
         };
         overlays = [
           (self: super: {
-            ### Add latest stable channel support
-            stable = import inputs.nixpkgs-stable {
+            ### Add unstable channel support
+            unstable = import inputs.nixpkgs-unstable {
               inherit (self.stdenv.hostPlatform) system;
               config = { inherit allowUnfreePredicate; };
             };

@@ -2,7 +2,7 @@
 {
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi;
+    package = pkgs.unstable.rofi;
     theme = "lb";
   };
 }

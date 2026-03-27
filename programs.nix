@@ -9,6 +9,7 @@
     home-manager.enable = true;
     yazi = {
       enable = true;
+      package = pkgs.unstable.yazi;
       shellWrapperName = "yy";
     };
     firefox.enable = true;
@@ -18,9 +19,9 @@
     };
     tealdeer.enable = true;
     pandoc.enable = true;
-    eww.enable = true;
     claude-code = {
       enable = true;
+      package = pkgs.unstable.claude-code;
     };
   };
 

@@ -19,7 +19,6 @@
     userDirs = {
       enable = true;
       createDirectories = true;
-      setSessionVariables = false;
     };
 
     mime.enable = true;

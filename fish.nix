@@ -3,7 +3,7 @@
   home.shell.enableFishIntegration = true;
   programs.fish = {
     enable = true;
-    package = pkgs.stable.fish;
+    package = pkgs.fish;
 
     shellAliases = {
       rm = "rm -i";

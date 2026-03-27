@@ -13,16 +13,13 @@
     systemd.enableXdgAutostart = true;
   };
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs.unstable; [
     hyprland-qtutils
     hyprland-protocols
 
-    # terminal
-    kitty
-
     # file managers
     yazi
-    nemo-with-extensions
+    pkgs.nemo-with-extensions
   ];
 
   services.hyprpolkitagent.enable = true;

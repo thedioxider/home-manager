@@ -6,7 +6,10 @@
 {
   # nixpkgs.config.cudaSupport = true;
 
-  home.packages = with pkgs; [
+  home.packages = [
+    inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
+  ]
+  ++ (with pkgs; [
     python3
     kitty
     trash-cli
@@ -14,14 +17,12 @@
     hyprshot
     chezmoi
     kdePackages.filelight
-    telegram-desktop
     spotify
     thunderbird
-    pkgs.stable.bitwarden-desktop
-    pkgs.stable.bitwarden-menu
+    bitwarden-desktop
+    bitwarden-menu
     blender
-    obsidian
-    texlive.combined.scheme-full
+    texliveMedium
     findutils.locate
     bluez
     blueman
@@ -34,9 +35,7 @@
     rpi-imager
     nmap
     android-studio
-    steam
-    pkgs.stable.aseprite
-    inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
+    aseprite
     scooter
     picocom
     rshell
@@ -44,12 +43,16 @@
     bc
     xxd
     hexedit
-    pkgs.stable.marktext
+    marktext
     gtk3
     gsettings-desktop-schemas
     libnotify
     zoom-us
-    vlc
     kdePackages.gwenview
-  ];
+  ])
+  ++ (with pkgs.unstable; [
+    telegram-desktop
+    obsidian
+    steam
+  ]);
 }

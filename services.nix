@@ -14,11 +14,12 @@
     };
     syncthing = {
       enable = true;
+      package = pkgs.unstable.syncthing;
       tray.enable = true;
     };
     ollama = {
       enable = true;
-      package = pkgs.stable.ollama-cuda;
+      package = pkgs.ollama-cuda;
       acceleration = "cuda";
     };
   };
