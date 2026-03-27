@@ -666,7 +666,42 @@
         "nix-flatpak": "nix-flatpak",
         "nix-sweep": "nix-sweep",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-stable": "nixpkgs-stable"
+        "nixpkgs-stable": "nixpkgs-stable",
+        "secrets-dir": "secrets-dir",
+        "sops-nix": "sops-nix"
+      }
+    },
+    "secrets-dir": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774580954,
+        "narHash": "sha256-byKIEUXqj1mKttWhtHLZT6xL2HIPc0NZIyrYQL9rfZs=",
+        "path": "/home/dio/.secrets",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/dio/.secrets",
+        "type": "path"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1774303811,
+        "narHash": "sha256-fhG4JAcLgjKwt+XHbjs8brpWnyKUfU4LikLm3s0Q/ic=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "614e256310e0a4f8a9ccae3fa80c11844fba7042",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "systems": {

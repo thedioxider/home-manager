@@ -20,6 +20,14 @@
       url = "github:Duckonaut/split-monitor-workspaces/v0.54.2";
       inputs.hyprland.follows = "hyprland";
     };
+    secrets-dir = {
+      url = "path:/home/dio/.secrets";
+      flake = false;
+    };
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -86,10 +94,14 @@
             ### Hyprland
             ./hypr
 
+            ### Secrets
+            ./secrets.nix
+
             ### Other
             inputs.nix-flatpak.homeManagerModules.nix-flatpak
             inputs.nix-sweep.homeModules.default
             inputs.hyprland.homeManagerModules.default
+            inputs.sops-nix.homeManagerModules.sops
           ];
 
           extraSpecialArgs = {
