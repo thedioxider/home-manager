@@ -20,6 +20,7 @@
       url = "github:Duckonaut/split-monitor-workspaces/v0.54.2";
       inputs.hyprland.follows = "hyprland";
     };
+    nix-openclaw.url = "github:openclaw/nix-openclaw";
     secrets-dir = {
       url = "path:/home/dio/.secrets";
       flake = false;
@@ -97,10 +98,14 @@
             ### Secrets
             ./secrets.nix
 
+            ### AI / Agentic
+            ./agentic.nix
+
             ### Other
             inputs.nix-flatpak.homeManagerModules.nix-flatpak
             inputs.nix-sweep.homeModules.default
             inputs.hyprland.homeManagerModules.default
+            inputs.nix-openclaw.homeManagerModules.openclaw
             inputs.sops-nix.homeManagerModules.sops
           ];
 
