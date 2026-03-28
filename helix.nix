@@ -19,7 +19,8 @@
       nixd
 
       # c/cpp
-      libclang
+      clang-tools
+      gcc
       lldb
 
       # html, css, javascript, typescript, json, markdown
@@ -182,12 +183,12 @@
           {
             name = "c";
             auto-format = true;
-            formatter.command = "${pkgs.libclang}/bin/clang-format";
+            formatter.command = "${pkgs.clang-tools}/bin/clang-format";
           }
           {
             name = "cpp";
             auto-format = true;
-            formatter.command = "${pkgs.libclang}/bin/clang-format";
+            formatter.command = "${pkgs.clang-tools}/bin/clang-format";
           }
           # {
           #   name = "qml";
