@@ -73,6 +73,9 @@
             ./style.nix
             ./services.nix
 
+            ### Symlinks
+            ./links.nix
+
             ### Fish configs
             ./fish.nix
 

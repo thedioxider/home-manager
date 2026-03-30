@@ -1,8 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
-  globLink,
   inputs,
   ...
 }:
@@ -16,16 +13,4 @@
     ];
   };
 
-  xdg.configFile."hypr/land" = {
-    source = globLink config "config/hypr/land";
-    recursive = true;
-  };
-
-  xdg.configFile."hypr/hypridle.conf" = {
-    source = globLink config "config/hypr/hypridle.conf";
-  };
-
-  xdg.configFile."hypr/hyprlock.conf" = {
-    source = globLink config "config/hypr/hyprlock.conf";
-  };
 }

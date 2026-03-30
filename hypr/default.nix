@@ -2,6 +2,7 @@
 {
   imports = [
     ./land.nix
+    ./links.nix
     ./runner.nix
     ./statbar.nix
   ];
