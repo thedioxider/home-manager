@@ -12,23 +12,7 @@ in
 {
   home.file.".nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/nvim";
 
-  home.packages = with pkgs; [
+  home.packages = [
     neovim-nightly
-    # luajit
-    # cargo
-
-    # required lazyvim dependencies
-    # gcc
-    # git
-    # tree-sitter
-
-    #optional lazyvim dependencies
-    fd
-    fzf
-    ripgrep
-    curl
-    lazygit
-    # ghostscript
-    # python3
   ];
 }

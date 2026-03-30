@@ -49,6 +49,10 @@
     libnotify
     zoom-us
     kdePackages.gwenview
+    fd
+    fzf
+    ripgrep
+    lazygit
   ])
   ++ (with pkgs.unstable; [
     telegram-desktop
