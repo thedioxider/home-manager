@@ -4,6 +4,8 @@
   ...
 }:
 {
+  home.file.".hypr".source = config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/hypr";
+
   xdg.configFile = {
     "hypr/land" = {
       source = globLink config "config/hypr/land";

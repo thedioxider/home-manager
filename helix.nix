@@ -8,6 +8,8 @@
 {
   xdg.configFile."helix/config.toml".source = globLink config "config/helix/config.toml";
 
+  home.file.".hx".source = config.lib.file.mkOutOfStoreSymlink "${config.xdg.configHome}/helix";
+
   programs.helix = {
     enable = true;
     package = pkgs.unstable.helix;
