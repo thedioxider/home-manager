@@ -53,6 +53,9 @@
     fzf
     ripgrep
     lazygit
+    gdu
+    bottom
+    gh
   ])
   ++ (with pkgs.unstable; [
     telegram-desktop
