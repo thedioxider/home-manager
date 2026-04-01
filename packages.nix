@@ -60,6 +60,5 @@
   ++ (with pkgs.unstable; [
     telegram-desktop
     obsidian
-    steam
   ]);
 }
