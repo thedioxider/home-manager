@@ -4,6 +4,16 @@
     EDITOR = "nvim";
   };
 
+  home.shellAliases = {
+    rm = "rm -i";
+    cp = "cp -i";
+    mv = "mv -i";
+    plz = "sudo";
+    fm = "yazi";
+    ew = "trash-put";
+    e = "nvim";
+  };
+
   xdg = {
     enable = true;
 
