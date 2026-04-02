@@ -21,5 +21,9 @@
       enable = true;
       package = pkgs.unstable.claude-code;
     };
+    distrobox = {
+      enable = true;
+      package = pkgs.unstable.distrobox;
+    };
   };
 }
