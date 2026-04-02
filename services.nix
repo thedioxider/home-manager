@@ -14,7 +14,7 @@
     };
     syncthing = {
       enable = true;
-      package = pkgs.unstable.syncthing;
+      package = pkgs.syncthing;
       tray.enable = true;
     };
     ollama = {
