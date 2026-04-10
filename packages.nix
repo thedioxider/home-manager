@@ -1,15 +1,8 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, ... }:
 {
   # nixpkgs.config.cudaSupport = true;
 
-  home.packages = [
-    inputs.nix-sweep.packages.${pkgs.stdenv.hostPlatform.system}.default
-  ]
-  ++ (with pkgs; [
+  home.packages = (with pkgs; [
     python3
     kitty
     trash-cli

@@ -11,12 +11,15 @@
     inherit homeDirectory;
   };
 
-  services.nix-sweep = {
+  programs.nh = {
     enable = true;
-    interval = "weekly";
-    removeOlder = "7d";
-    keepMin = 5;
-    keepMax = 30;
+    homeFlake = "/home/dio/.hm";
+    osFlake = "/etc/nixos";
+    clean = {
+      enable = true;
+      dates = "weekly";
+      extraArgs = "--keep 3 --keep-since 7d";
+    };
   };
 
   # targets.genericLinux.enable = true;
