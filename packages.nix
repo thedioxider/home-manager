@@ -56,6 +56,7 @@
     gdu
     bottom
     gh
+    chromium
   ])
   ++ (with pkgs.unstable; [
     telegram-desktop
