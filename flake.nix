@@ -82,7 +82,7 @@
             ./neovim.nix
 
             ### Helix and languages
-            ./helix.nix
+            # ./helix.nix
 
             ### Hyprland
             ./hypr
