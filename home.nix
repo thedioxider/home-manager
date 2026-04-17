@@ -9,6 +9,7 @@
   home = {
     inherit username;
     inherit homeDirectory;
+    sessionPath = [ "$HOME/.local/bin" ];
   };
 
   programs.nh = {

@@ -17,10 +17,10 @@
     };
     tealdeer.enable = true;
     pandoc.enable = true;
-    claude-code = {
-      enable = true;
-      package = pkgs.unstable.claude-code;
-    };
+    # claude-code = {
+    #   enable = true;
+    #   package = pkgs.unstable.claude-code;
+    # };
     distrobox = {
       enable = true;
       package = pkgs.unstable.distrobox;
