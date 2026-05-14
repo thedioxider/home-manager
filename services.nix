@@ -17,10 +17,10 @@
       package = pkgs.syncthing;
       tray.enable = true;
     };
-    ollama = {
-      enable = true;
-      package = pkgs.ollama-cuda;
-      acceleration = "cuda";
-    };
+    # ollama = {
+    #   enable = true;
+    #   package = pkgs.ollama-cuda;
+    #   acceleration = "cuda";
+    # };
   };
 }

@@ -10,9 +10,7 @@
       playerctl
       wl-clipboard
       hyprshot
-      chezmoi
       kdePackages.filelight
-      spotify
       thunderbird
       bitwarden-desktop
       bitwarden-menu
@@ -22,7 +20,6 @@
       bluez
       blueman
       arduino-ide
-      bottles
       obs-studio
       adwaita-icon-theme
       inkscape
@@ -41,7 +38,6 @@
       gtk3
       gsettings-desktop-schemas
       libnotify
-      zoom-us
       kdePackages.gwenview
       fd
       fzf
