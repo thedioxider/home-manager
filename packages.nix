@@ -47,6 +47,7 @@
       bottom
       gh
       chromium
+      qdirstat
     ])
     ++ (with pkgs.unstable; [
       telegram-desktop
