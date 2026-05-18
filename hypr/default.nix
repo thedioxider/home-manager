@@ -17,6 +17,7 @@
   home.packages = with pkgs.unstable; [
     hyprland-qtutils
     hyprland-protocols
+    pkgs.unstable.hyprshutdown
 
     # file managers
     yazi

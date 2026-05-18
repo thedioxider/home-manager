@@ -13,9 +13,9 @@
       url = "github:nix-community/neovim-nightly-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland.url = "github:hyprwm/Hyprland/v0.54.2";
+    hyprland.url = "github:hyprwm/Hyprland/v0.55.2";
     hyprland-split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces/v0.54.2";
+      url = "github:Duckonaut/split-monitor-workspaces/v0.55.1";
       inputs.hyprland.follows = "hyprland";
     };
   };
