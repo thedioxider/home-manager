@@ -9,7 +9,7 @@ local programs = require("programs")
 local smw = hl.plugin.split_monitor_workspaces
 
 hl.bind(MAIN_MOD .. "+T", hl.dsp.exec_cmd(programs.terminal))
-hl.bind(MAIN_MOD .. "+C", hl.dsp.window.kill())
+hl.bind(MAIN_MOD .. "+C", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. "+ALT+BackSpace", hl.dsp.exec_cmd("hyprshutdown --post-cmd 'hyprctl dispatch \"hl.dsp.exit()\"'"))
 hl.bind(MAIN_MOD .. "+E", hl.dsp.exec_cmd(programs.file_manager))
 hl.bind(MAIN_MOD .. "+V", hl.dsp.window.float())
@@ -22,7 +22,7 @@ hl.bind(MAIN_MOD .. "+M", hl.dsp.window.pin())
 hl.bind("ALT+Tab", hl.dsp.focus({ urgent_or_last = true }))
 hl.bind(MAIN_MOD .. "+U", hl.dsp.window.toggle_swallow())
 hl.bind(MAIN_MOD .. "+SHIFT+S", function()
-	endsmw.change_monitor("+1")
+	smw.change_monitor("+1")
 end)
 
 hl.layer_rule({ match = { namespace = "selection" }, no_anim = true })
