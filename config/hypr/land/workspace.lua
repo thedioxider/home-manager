@@ -67,7 +67,6 @@ hl.workspace_rule({
 	gaps_out = 0,
 	gaps_in = 0,
 })
-
 -- hl.window_rule({
 --     match = {
 --         float = false,

@@ -1,5 +1,3 @@
-MAIN_MOD = "SUPER"
-
 hl.config({
 	binds = {
 		hide_special_on_workspace_change = true,

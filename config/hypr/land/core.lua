@@ -1,5 +1,7 @@
 -- https://wiki.hypr.land/Configuring/
 
+MAIN_MOD = "SUPER"
+
 ---- Monitors
 require("monitors")
 
@@ -23,6 +25,9 @@ require("looks")
 
 ---- Input
 require("input")
+
+---- Useful utils for development
+require("dev_utils")
 
 ---- Look and Feel
 -- https://wiki.hyprland.org/Configuring/Variables
