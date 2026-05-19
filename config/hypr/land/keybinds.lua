@@ -39,6 +39,17 @@ hl.bind(MAIN_MOD .. "+L", hl.dsp.focus({ direction = "r" }))
 hl.bind(MAIN_MOD .. "+K", hl.dsp.focus({ direction = "u" }))
 hl.bind(MAIN_MOD .. "+J", hl.dsp.focus({ direction = "d" }))
 
+-- Switch focus to floating/tiled
+hl.bind(MAIN_MOD .. "+I", function()
+	local active = hl.get_active_window()
+	if not active then
+		return
+	end
+	hl.dispatch(hl.dsp.focus({
+		window = active.floating and "tiled" or "floating",
+	}))
+end)
+
 -- Switch workspaces with MAIN_MOD + [0-9]
 -- Move active window to a workspace with MAIN_MOD + SHIFT + [0-9]
 for i = 0, 9 do
