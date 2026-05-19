@@ -50,6 +50,21 @@ hl.bind(MAIN_MOD .. "+I", function()
 	}))
 end)
 
+-- Change current workspace's type
+local layout_cycle = { "dwindle", "scrolling", "master" }
+hl.bind(MAIN_MOD .. "+ALT+M", function()
+	local ws = hl.get_active_workspace()
+	local current = ws and ws.tiled_layout or hl.get_config("general.layout")
+	local next_layout = layout_cycle[1]
+	for i, name in ipairs(layout_cycle) do
+		if name == current then
+			next_layout = layout_cycle[(i % #layout_cycle) + 1]
+			break
+		end
+	end
+	hl.dispatch(hl.dsp.exec_cmd("hyprctl dispatch setlayout " .. next_layout))
+end)
+
 -- Switch workspaces with MAIN_MOD + [0-9]
 -- Move active window to a workspace with MAIN_MOD + SHIFT + [0-9]
 for i = 0, 9 do
