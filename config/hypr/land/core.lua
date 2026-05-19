@@ -29,6 +29,9 @@ require("input")
 ---- Useful utils for development
 require("dev_utils")
 
+---- Rules for certain windows
+require("special_rules")
+
 ---- Look and Feel
 -- https://wiki.hyprland.org/Configuring/Variables
 hl.config({
