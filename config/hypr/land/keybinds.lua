@@ -8,6 +8,27 @@ hl.config({
 local programs = require("programs")
 local smw = hl.plugin.split_monitor_workspaces
 
+local function dsp_by_layout(cases)
+	local ws = hl.get_active_workspace()
+	if not ws then
+		return hl.dsp.no_op()
+	end
+	local ws_layout = ws.tiled_layout
+	if cases[ws_layout] then
+		return cases[ws_layout]
+	elseif cases["default"] then
+		return cases["default"]
+	else
+		hl.notification.create({
+			text = "Layout have no such binding",
+			duration = 1000,
+			icon = 4,
+			color = "rgb(0000ff)",
+		})
+	end
+	return hl.dsp.no_op()
+end
+
 hl.bind(MAIN_MOD .. "+T", hl.dsp.exec_cmd(programs.terminal))
 hl.bind(MAIN_MOD .. "+C", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. "+ALT+BackSpace", hl.dsp.exec_cmd("hyprshutdown --post-cmd 'hyprctl dispatch \"hl.dsp.exit()\"'"))
@@ -16,8 +37,6 @@ hl.bind(MAIN_MOD .. "+V", hl.dsp.window.float())
 hl.bind(MAIN_MOD .. "+R", hl.dsp.exec_cmd(programs.runner))
 hl.bind(MAIN_MOD .. "+F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 hl.bind(MAIN_MOD .. "+P", hl.dsp.window.pseudo()) -- dwindle
-hl.bind(MAIN_MOD .. "+Y", hl.dsp.layout("togglesplit"))
-hl.bind(MAIN_MOD .. "+S", hl.dsp.layout("swapsplit"))
 hl.bind(MAIN_MOD .. "+M", hl.dsp.window.pin())
 hl.bind("ALT+Tab", hl.dsp.focus({ urgent_or_last = true }))
 hl.bind(MAIN_MOD .. "+U", hl.dsp.window.toggle_swallow())
@@ -54,16 +73,49 @@ end)
 local layout_cycle = { "dwindle", "scrolling", "master" }
 hl.bind(MAIN_MOD .. "+ALT+M", function()
 	local ws = hl.get_active_workspace()
-	local current = ws and ws.tiled_layout or hl.get_config("general.layout")
+	if not ws then
+		return
+	end
+	local ws_layout = ws.tiled_layout
 	local next_layout = layout_cycle[1]
 	for i, name in ipairs(layout_cycle) do
-		if name == current then
+		if name == ws_layout then
 			next_layout = layout_cycle[(i % #layout_cycle) + 1]
 			break
 		end
 	end
-	hl.dispatch(hl.dsp.exec_cmd("hyprctl dispatch setlayout " .. next_layout))
+	hl.workspace_rule({ workspace = tostring(ws.id), layout = next_layout })
 end)
+
+-- Layout-specific binds
+hl.bind(
+	MAIN_MOD .. "+S",
+	dsp_by_layout({
+		dwindle = hl.dsp.layout("swapsplit"),
+		master = hl.dsp.layout("swapwithmaster master ignoremaster"),
+		scrolling = hl.dsp.layout("swapcol r"),
+	})
+)
+hl.bind(
+	MAIN_MOD .. "+SHIFT+S",
+	dsp_by_layout({
+		scrolling = hl.dsp.layout("swapcol l"),
+	})
+)
+hl.bind(
+	MAIN_MOD .. "+W",
+	dsp_by_layout({
+		dwindle = hl.dsp.layout("togglesplit"),
+		master = hl.dsp.layout("swapprev noloop"),
+		scrolling = hl.dsp.layout("consume"),
+	})
+)
+hl.bind(
+	MAIN_MOD .. "+SHIFT+W",
+	dsp_by_layout({
+		scrolling = hl.dsp.layout("expel"),
+	})
+)
 
 -- Switch workspaces with MAIN_MOD + [0-9]
 -- Move active window to a workspace with MAIN_MOD + SHIFT + [0-9]
