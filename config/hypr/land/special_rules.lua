@@ -11,7 +11,15 @@ hl.window_rule({
 
 -- AmneziaVPN
 hl.window_rule({
-	match = { title = "^AmneziaVPN$" },
+	match = { class = "^AmneziaVPN$" },
 	float = true,
 	size = { 360, 640 },
+})
+
+-- Telegram
+hl.window_rule({
+	match = { class = "^org.telegram.desktop$" },
+	float = true,
+	pseudo = true,
+	persistent_size = true,
 })
