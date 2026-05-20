@@ -36,7 +36,6 @@ require("special_rules")
 -- https://wiki.hyprland.org/Configuring/Variables
 hl.config({
 	general = {
-		layout = "dwindle",
 		no_focus_fallback = true,
 
 		border_size = 2,
@@ -62,25 +61,6 @@ hl.config({
 		},
 	},
 
-	-- See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
-	dwindle = {
-		force_split = 2,
-		preserve_split = true, -- If yes, mainMod + Y to change orientation
-		special_scale_factor = 0.9,
-		precise_mouse_move = true,
-	},
-
-	-- See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-	-- master = {
-	--     mfact = .7,
-	--     new_status = "master",
-	--     new_on_top = true,
-	--     new_on_active = "after",
-	--     orientation = "center",
-	--     center_master_fallback = "left",
-	--     count_for_center_master = 4,
-	-- },
-
 	-- https://wiki.hyprland.org/Configuring/Variables/#misc
 	misc = {
 		disable_autoreload = true,
@@ -91,7 +71,6 @@ hl.config({
 		middle_click_paste = false,
 		focus_on_activate = false,
 		initial_workspace_tracking = true,
-		size_limits_tiled = true,
 
 		-- swallows terminal whenever it starts some child gui program
 		enable_swallow = true,

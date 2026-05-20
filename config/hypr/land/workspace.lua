@@ -1,6 +1,29 @@
 hl.config({
 	group = {},
 
+	general = {
+		layout = "scrolling",
+	},
+
+	dwindle = {
+		force_split = 2,
+		preserve_split = true, -- If yes, mainMod + Y to change orientation
+		special_scale_factor = 0.9,
+		precise_mouse_move = true,
+	},
+
+	master = {
+		mfact = 0.7,
+		new_status = "slave",
+		orientation = "right",
+	},
+
+	scrolling = {
+		fullscreen_on_one_column = true,
+		column_width = 0.9,
+		focus_fit_method = 0,
+	},
+
 	plugin = {
 		split_monitor_workspaces = {
 			count = 6,
