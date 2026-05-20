@@ -9,24 +9,25 @@ local programs = require("programs")
 local smw = hl.plugin.split_monitor_workspaces
 
 local function dsp_by_layout(cases)
-	local ws = hl.get_active_workspace()
-	if not ws then
-		return hl.dsp.no_op()
+	return function()
+		local ws = hl.get_active_workspace()
+		if not ws then
+			return
+		end
+		local ws_layout = ws.tiled_layout
+		if cases[ws_layout] then
+			hl.dispatch(cases[ws_layout])
+		elseif cases["default"] then
+			hl.dispatch(cases["default"])
+		else
+			hl.notification.create({
+				text = "Layout have no such binding",
+				duration = 1000,
+				icon = 4,
+				color = "rgb(0000ff)",
+			})
+		end
 	end
-	local ws_layout = ws.tiled_layout
-	if cases[ws_layout] then
-		return cases[ws_layout]
-	elseif cases["default"] then
-		return cases["default"]
-	else
-		hl.notification.create({
-			text = "Layout have no such binding",
-			duration = 1000,
-			icon = 4,
-			color = "rgb(0000ff)",
-		})
-	end
-	return hl.dsp.no_op()
 end
 
 hl.bind(MAIN_MOD .. "+T", hl.dsp.exec_cmd(programs.terminal))
