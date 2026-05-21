@@ -17,10 +17,34 @@ hl.config({
 			drag_lock = false,
 		},
 	},
+
+	animations = {
+		workspace_wraparound = true,
+	},
+
+	gestures = {
+		workspace_swipe_create_new = false,
+		workspace_swipe_cancel_ratio = 0.2,
+	},
+})
+
+-- TODO: [Hyprgrid](https://github.com/jairnarvaez/Hyprgrid)
+hl.gesture({
+	fingers = 3,
+	direction = "vertical",
+	action = "workspace",
 })
 
 hl.gesture({
 	fingers = 3,
 	direction = "horizontal",
-	action = "workspace",
+	action = "scroll_move",
+})
+
+hl.gesture({
+	fingers = 2,
+	direction = "pinch",
+	action = "cursorZoom",
+	mode = "live",
+	mods = MAIN_MOD,
 })

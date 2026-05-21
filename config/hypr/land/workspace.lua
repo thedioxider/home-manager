@@ -1,4 +1,5 @@
 hl.config({
+	-- TODO: groups
 	group = {},
 
 	general = {
@@ -23,7 +24,10 @@ hl.config({
 		column_width = 0.9,
 		focus_fit_method = 0,
 	},
+})
 
+---- Setup all existing workspaces
+hl.config({
 	plugin = {
 		split_monitor_workspaces = {
 			count = 6,
