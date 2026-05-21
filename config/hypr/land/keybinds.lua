@@ -23,8 +23,7 @@ local function dsp_by_layout(cases)
 			hl.notification.create({
 				text = "Layout have no such binding",
 				duration = 1000,
-				icon = 4,
-				color = "rgb(0000ff)",
+				icon = "confused",
 			})
 		end
 	end
@@ -74,7 +73,7 @@ hl.bind(MAIN_MOD .. "+I", function()
 end)
 
 -- Change current workspace's type
-local layout_cycle = { "dwindle", "scrolling", "master" }
+local layout_cycle = { "scrolling", "dwindle", "master" }
 hl.bind(MAIN_MOD .. "+ALT+M", function()
 	local ws = hl.get_active_workspace()
 	if not ws then
