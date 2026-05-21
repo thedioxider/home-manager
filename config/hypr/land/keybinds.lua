@@ -93,13 +93,14 @@ hl.bind(
 	MAIN_MOD .. "+S",
 	dsp_by_layout({
 		dwindle = hl.dsp.layout("swapsplit"),
-		master = hl.dsp.layout("swapwithmaster master ignoremaster"),
+		master = hl.dsp.layout("swapprev noloop"),
 		scrolling = hl.dsp.layout("swapcol r"),
 	})
 )
 hl.bind(
 	MAIN_MOD .. "+SHIFT+S",
 	dsp_by_layout({
+		master = hl.dsp.layout("swapnext noloop"),
 		scrolling = hl.dsp.layout("swapcol l"),
 	})
 )
@@ -107,15 +108,34 @@ hl.bind(
 	MAIN_MOD .. "+W",
 	dsp_by_layout({
 		dwindle = hl.dsp.layout("togglesplit"),
-		master = hl.dsp.layout("swapprev noloop"),
+		master = hl.dsp.layout("swapwithmaster master ignoremaster"),
 		scrolling = hl.dsp.layout("consume"),
 	})
 )
 hl.bind(
 	MAIN_MOD .. "+SHIFT+W",
 	dsp_by_layout({
+		master = hl.dsp.layout("swapwithmaster master"),
 		scrolling = hl.dsp.layout("expel"),
 	})
+)
+hl.bind(
+	MAIN_MOD .. "+equal",
+	dsp_by_layout({
+		dwindle = hl.dsp.layout("splitratio +0.1"),
+		master = hl.dsp.layout("mfact +0.05"),
+		scrolling = hl.dsp.layout("colresize +0.05"),
+	}),
+	{ repeating = true }
+)
+hl.bind(
+	MAIN_MOD .. "+minus",
+	dsp_by_layout({
+		dwindle = hl.dsp.layout("splitratio -0.1"),
+		master = hl.dsp.layout("mfact -0.05"),
+		scrolling = hl.dsp.layout("colresize -0.05"),
+	}),
+	{ repeating = true }
 )
 
 -- Switch workspaces with MAIN_MOD + [0-9]

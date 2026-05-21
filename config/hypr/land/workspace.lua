@@ -2,7 +2,7 @@ hl.config({
 	group = {},
 
 	general = {
-		layout = "scrolling",
+		layout = "dwindle",
 	},
 
 	dwindle = {
@@ -15,7 +15,7 @@ hl.config({
 	master = {
 		mfact = 0.7,
 		new_status = "slave",
-		orientation = "right",
+		orientation = "left",
 	},
 
 	scrolling = {
