@@ -1,5 +1,6 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
@@ -7,10 +8,12 @@
     home-manager.enable = true;
     yazi = {
       enable = true;
-      package = pkgs.unstable.yazi;
       shellWrapperName = "yy";
     };
-    firefox.enable = true;
+    firefox = {
+      enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
+    };
     vscode = {
       enable = true;
       # package = pkgs.vscodium;
@@ -21,9 +24,6 @@
     #   enable = true;
     #   package = pkgs.unstable.claude-code;
     # };
-    distrobox = {
-      enable = true;
-      package = pkgs.unstable.distrobox;
-    };
+    distrobox.enable = true;
   };
 }

@@ -3,7 +3,7 @@
   # nixpkgs.config.cudaSupport = true;
 
   home.packages =
-    (with pkgs; [
+    (with pkgs.stable; [
       python3
       kitty
       trash-cli
@@ -49,7 +49,7 @@
       chromium
       qdirstat
     ])
-    ++ (with pkgs.unstable; [
+    ++ (with pkgs; [
       telegram-desktop
       obsidian
       android-studio

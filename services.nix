@@ -14,7 +14,6 @@
     };
     syncthing = {
       enable = true;
-      package = pkgs.syncthing;
       tray.enable = true;
     };
     # ollama = {
