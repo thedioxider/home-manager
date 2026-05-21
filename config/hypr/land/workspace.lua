@@ -2,7 +2,7 @@ hl.config({
 	group = {},
 
 	general = {
-		layout = "dwindle",
+		layout = "scrolling",
 	},
 
 	dwindle = {

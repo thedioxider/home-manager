@@ -41,9 +41,10 @@ hl.bind(MAIN_MOD .. "+P", hl.dsp.window.pseudo()) -- dwindle
 hl.bind(MAIN_MOD .. "+M", hl.dsp.window.pin())
 hl.bind("ALT+Tab", hl.dsp.focus({ urgent_or_last = true }))
 hl.bind(MAIN_MOD .. "+U", hl.dsp.window.toggle_swallow())
-hl.bind(MAIN_MOD .. "+SHIFT+S", function()
+hl.bind(MAIN_MOD .. "+A", function()
 	smw.change_monitor("+1")
 end)
+hl.bind(MAIN_MOD .. "+SHIFT+A", hl.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "+1" }))
 
 hl.layer_rule({ match = { namespace = "selection" }, no_anim = true })
 hl.bind("Print", hl.dsp.exec_cmd(programs.screenshot_region))
