@@ -24,7 +24,7 @@ PanelWindow {
     implicitWidth: content.implicitWidth
     implicitHeight: content.implicitHeight
 
-    WlrLayershell.layer: WlrLayer.Background
+    WlrLayershell.layer: WlrLayer.Bottom
     WlrLayershell.namespace: "binary-clock"
 
     SystemClock {
