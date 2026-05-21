@@ -26,6 +26,8 @@
     hyprland-protocols
     hyprshutdown
 
+    waypaper
+
     # file managers
     yazi
     nemo-with-extensions
@@ -54,4 +56,5 @@
       targets = [ "hyprland-session.target" ];
     };
   };
+  services.awww.enable = true;
 }
