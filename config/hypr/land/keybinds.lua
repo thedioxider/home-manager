@@ -66,14 +66,26 @@ hl.bind(
 	MAIN_MOD .. "+H",
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "l" }),
-		scrolling = hl.dsp.layout("focus l"),
+		scrolling = function()
+			if hl.get_active_window() and hl.get_active_window().floating then
+				hl.dispatch(hl.dsp.focus({ direction = "l" }))
+			else
+				hl.dispatch(hl.dsp.layout("focus l"))
+			end
+		end,
 	})
 )
 hl.bind(
 	MAIN_MOD .. "+L",
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "r" }),
-		scrolling = hl.dsp.layout("focus r"),
+		scrolling = function()
+			if hl.get_active_window() and hl.get_active_window().floating then
+				hl.dispatch(hl.dsp.focus({ direction = "r" }))
+			else
+				hl.dispatch(hl.dsp.layout("focus r"))
+			end
+		end,
 	})
 )
 local scrolling_col_single = function()
@@ -87,10 +99,10 @@ hl.bind(
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "u" }),
 		scrolling = function()
-			if scrolling_col_single() then
-				smw.workspace("m-1")
-			else
+			if not scrolling_col_single() or hl.get_active_window() and hl.get_active_window().floating then
 				hl.dispatch(hl.dsp.focus({ direction = "u" }))
+			else
+				smw.workspace("m-1")
 			end
 		end,
 	})
@@ -100,10 +112,10 @@ hl.bind(
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "d" }),
 		scrolling = function()
-			if scrolling_col_single() then
-				smw.workspace("m+1")
-			else
+			if not scrolling_col_single() or hl.get_active_window() and hl.get_active_window().floating then
 				hl.dispatch(hl.dsp.focus({ direction = "d" }))
+			else
+				smw.workspace("m+1")
 			end
 		end,
 	})
