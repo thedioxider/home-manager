@@ -56,10 +56,52 @@ hl.bind(MAIN_MOD .. "+right", hl.dsp.focus({ direction = "r" }))
 hl.bind(MAIN_MOD .. "+up", hl.dsp.focus({ direction = "u" }))
 hl.bind(MAIN_MOD .. "+down", hl.dsp.focus({ direction = "d" }))
 -- Move focus with MAIN_MOD + vim motions
-hl.bind(MAIN_MOD .. "+H", hl.dsp.focus({ direction = "l" }))
-hl.bind(MAIN_MOD .. "+L", hl.dsp.focus({ direction = "r" }))
-hl.bind(MAIN_MOD .. "+K", hl.dsp.focus({ direction = "u" }))
-hl.bind(MAIN_MOD .. "+J", hl.dsp.focus({ direction = "d" }))
+hl.bind(
+	MAIN_MOD .. "+H",
+	dsp_by_layout({
+		default = hl.dsp.focus({ direction = "l" }),
+		scrolling = hl.dsp.layout("focus l"),
+	})
+)
+hl.bind(
+	MAIN_MOD .. "+L",
+	dsp_by_layout({
+		default = hl.dsp.focus({ direction = "r" }),
+		scrolling = hl.dsp.layout("focus r"),
+	})
+)
+local scrolling_col_single = function()
+	local window = hl.get_active_window()
+	local layout = window and window.layout
+	local col = layout and layout.column
+	return not col or #col.windows <= 1
+end
+hl.bind(
+	MAIN_MOD .. "+K",
+	dsp_by_layout({
+		default = hl.dsp.focus({ direction = "u" }),
+		scrolling = function()
+			if scrolling_col_single() then
+				smw.workspace("m-1")
+			else
+				hl.dispatch(hl.dsp.focus({ direction = "u" }))
+			end
+		end,
+	})
+)
+hl.bind(
+	MAIN_MOD .. "+J",
+	dsp_by_layout({
+		default = hl.dsp.focus({ direction = "d" }),
+		scrolling = function()
+			if scrolling_col_single() then
+				smw.workspace("m+1")
+			else
+				hl.dispatch(hl.dsp.focus({ direction = "d" }))
+			end
+		end,
+	})
+)
 
 -- Switch focus to floating/tiled
 hl.bind(MAIN_MOD .. "+I", function()
