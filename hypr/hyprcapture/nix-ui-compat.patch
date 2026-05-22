@@ -1,0 +1,31 @@
+diff --git a/src/ui/clipboard_utils.cpp b/src/ui/clipboard_utils.cpp
+index c6578bf..5b3f8f1 100644
+--- a/src/ui/clipboard_utils.cpp
++++ b/src/ui/clipboard_utils.cpp
+@@ -45,6 +45,13 @@ bool hasWritableGroupOrOther(mode_t mode) {
+ }
+ 
+ bool parentChainTrusted(const QString& path) {
++    // /nix/store is managed by the Nix daemon; individual store paths cannot
++    // be modified by unprivileged users despite nixbld group write on the dir.
++    if (path.startsWith(QStringLiteral("/nix/store/"))) {
++        struct stat nixStoreSt {};
++        if (stat("/nix/store", &nixStoreSt) == 0 && nixStoreSt.st_uid == 0)
++            return true;
++    }
+     QFileInfo info(path);
+     QDir      current = info.absoluteDir();
+     while (!current.path().isEmpty()) {
+@@ -76,7 +83,11 @@ QString trustedExecutablePath(const QString& path) {
+ }
+ 
+ QString trustedSystemProgramImpl(const QString& name) {
+-    for (const QString& dir : {QStringLiteral("/usr/local/bin"), QStringLiteral("/usr/bin"), QStringLiteral("/bin")}) {
++    const QString pathEnv = QString::fromUtf8(qgetenv("PATH"));
++    QStringList   dirs = pathEnv.split(QLatin1Char(':'), Qt::SkipEmptyParts);
++    for (const QString& dir : dirs) {
++        if (!parentChainTrusted(dir))
++            continue;
+         const QString trusted = trustedExecutablePath(QDir(dir).filePath(name));
+         if (!trusted.isEmpty())
+             return trusted;

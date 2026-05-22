@@ -1,0 +1,16 @@
+diff --git a/src/plugin/session_launcher.cpp b/src/plugin/session_launcher.cpp
+index 66c65a0..49df963 100644
+--- a/src/plugin/session_launcher.cpp
++++ b/src/plugin/session_launcher.cpp
+@@ -121,7 +121,10 @@ bool allowEnvironmentName(std::string_view name) {
+ 
+ std::vector<std::string> childEnvironment() {
+     std::vector<std::string> env;
+-    env.push_back("PATH=/usr/local/bin:/usr/bin:/bin");
++    if (const char* path = std::getenv("PATH"); path && *path)
++        env.push_back(std::string("PATH=") + path);
++    else
++        env.push_back("PATH=/usr/local/bin:/usr/bin:/bin");
+     for (char** item = environ; item && *item; ++item) {
+         const std::string entry(*item);
+         const auto        separator = entry.find('=');

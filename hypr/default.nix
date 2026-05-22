@@ -1,4 +1,7 @@
 { pkgs, inputs, ... }:
+let
+  hyprcapture = pkgs.callPackage ./hyprcapture { inherit inputs pkgs; };
+in
 {
   imports = [
     ./links.nix
@@ -15,13 +18,20 @@
       hl.plugin.load("${
         inputs.hyprland-split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.default
       }/lib/libsplit-monitor-workspaces.so")
+      hl.plugin.load("${hyprcapture}/lib/libhyprcapture.so")
+      hl.config({ plugin = { hyprcapture = { helper = "${hyprcapture}/bin/hyprcapture-ui" } } })
+
       local root = debug.getinfo(1, "S").source:match("@(.*/)")
       package.path = package.path .. ";" .. root .. "land/?.lua"
       require("core")
     '';
   };
 
-  home.packages = with pkgs; [
+  home.packages = [
+    hyprcapture
+  ]
+  ++ (with pkgs; [
+    gpu-screen-recorder
     hyprland-qtutils
     hyprland-protocols
     hyprshutdown
@@ -33,7 +43,7 @@
     nemo-with-extensions
 
     lm_sensors
-  ];
+  ]);
 
   services.hyprpolkitagent.enable = true;
   services.hypridle.enable = true;

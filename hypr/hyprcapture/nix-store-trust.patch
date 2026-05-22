@@ -1,0 +1,18 @@
+diff --git a/src/plugin/session_launcher.cpp b/src/plugin/session_launcher.cpp
+index 66c65a0..580c28e 100644
+--- a/src/plugin/session_launcher.cpp
++++ b/src/plugin/session_launcher.cpp
+@@ -47,6 +47,13 @@ bool hasWritableGroupOrOther(mode_t mode) {
+ }
+ 
+ bool parentChainTrusted(const std::filesystem::path& path) {
++    // /nix/store is managed by the Nix daemon; individual store paths cannot
++    // be modified by unprivileged users despite nixbld group write on the dir.
++    if (path.string().starts_with("/nix/store/")) {
++        struct stat nixStoreSt {};
++        if (stat("/nix/store", &nixStoreSt) == 0 && nixStoreSt.st_uid == 0)
++            return true;
++    }
+     for (auto current = path.parent_path(); !current.empty(); current = current.parent_path()) {
+         struct stat st {};
+         const auto  native = current.string();

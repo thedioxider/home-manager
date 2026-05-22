@@ -1,0 +1,56 @@
+diff --git a/src/plugin/recording.cpp b/src/plugin/recording.cpp
+index 6371e74..741bba4 100644
+--- a/src/plugin/recording.cpp
++++ b/src/plugin/recording.cpp
+@@ -105,6 +105,13 @@ bool hasWritableGroupOrOther(mode_t mode) {
+ }
+ 
+ bool parentChainTrusted(const std::filesystem::path& path) {
++    // /nix/store is managed by the Nix daemon; individual store paths cannot
++    // be modified by unprivileged users despite nixbld group write on the dir.
++    if (path.string().starts_with("/nix/store/")) {
++        struct stat nixStoreSt {};
++        if (stat("/nix/store", &nixStoreSt) == 0 && nixStoreSt.st_uid == 0)
++            return true;
++    }
+     for (auto current = path.parent_path(); !current.empty(); current = current.parent_path()) {
+         struct stat st {};
+         const auto  native = current.string();
+@@ -134,20 +141,29 @@ std::optional<std::string> trustedExecutablePath(const std::string& candidate) {
+     return native;
+ }
+ 
+-std::optional<std::string> trustedFfmpegPath() {
+-    for (const auto& candidate : {"/usr/local/bin/ffmpeg", "/usr/bin/ffmpeg", "/bin/ffmpeg"}) {
+-        if (const auto trusted = trustedExecutablePath(candidate))
++std::optional<std::string> trustedSystemProgramPath(const std::string& name) {
++    const char* pathEnv = std::getenv("PATH");
++    if (!pathEnv || !*pathEnv)
++        return std::nullopt;
++    std::string_view path(pathEnv);
++    while (!path.empty()) {
++        auto sep = path.find(':');
++        auto dir = std::string(sep == std::string_view::npos ? path : path.substr(0, sep));
++        path = sep == std::string_view::npos ? std::string_view{} : path.substr(sep + 1);
++        if (dir.empty())
++            continue;
++        if (const auto trusted = trustedExecutablePath(dir + "/" + name))
+             return trusted;
+     }
+     return std::nullopt;
+ }
+ 
++std::optional<std::string> trustedFfmpegPath() {
++    return trustedSystemProgramPath("ffmpeg");
++}
++
+ std::optional<std::string> trustedGpuScreenRecorderPath() {
+-    for (const auto& candidate : {"/usr/local/bin/gpu-screen-recorder", "/usr/bin/gpu-screen-recorder", "/bin/gpu-screen-recorder"}) {
+-        if (const auto trusted = trustedExecutablePath(candidate))
+-            return trusted;
+-    }
+-    return std::nullopt;
++    return trustedSystemProgramPath("gpu-screen-recorder");
+ }
+ 
+ std::optional<std::string> findVaapiRenderDevice() {

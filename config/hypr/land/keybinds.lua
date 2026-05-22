@@ -52,7 +52,9 @@ end)
 hl.bind(MAIN_MOD .. "+SHIFT+A", hl.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "+1" }))
 
 hl.layer_rule({ match = { namespace = "selection" }, no_anim = true })
-hl.bind("Print", hl.dsp.exec_cmd(programs.screenshot_region))
+hl.bind("Print", function()
+	hl.plugin.hyprcapture.open()
+end)
 
 -- Move focus with MAIN_MOD + arrow keys
 hl.bind(MAIN_MOD .. "+left", hl.dsp.focus({ direction = "l" }))
