@@ -34,13 +34,17 @@ hl.bind(MAIN_MOD .. "+C", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. "+ALT+BackSpace", hl.dsp.exec_cmd("hyprshutdown --post-cmd 'hyprctl dispatch \"hl.dsp.exit()\"'"))
 hl.bind(MAIN_MOD .. "+E", hl.dsp.exec_cmd(programs.file_manager))
 hl.bind(MAIN_MOD .. "+V", hl.dsp.window.float())
-hl.bind(MAIN_MOD .. "+R", hl.dsp.exec_cmd(programs.runner))
+
 hl.bind(MAIN_MOD .. "+N", hl.dsp.exec_cmd("swaync-client -t"))
 hl.bind(MAIN_MOD .. "+F", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 hl.bind(MAIN_MOD .. "+P", hl.dsp.window.pseudo()) -- dwindle
 hl.bind(MAIN_MOD .. "+M", hl.dsp.window.pin())
 hl.bind("ALT+Tab", hl.dsp.focus({ urgent_or_last = true }))
 hl.bind(MAIN_MOD .. "+U", hl.dsp.window.toggle_swallow())
+
+hl.bind(MAIN_MOD .. "+R", hl.dsp.exec_cmd(programs.launcher))
+hl.bind(MAIN_MOD .. "+ALT+V", hl.dsp.exec_cmd(programs.clipboard))
+hl.bind(MAIN_MOD .. "+ALT+E", hl.dsp.exec_cmd(programs.emoji_picker))
 
 hl.bind(MAIN_MOD .. "+ALT+H", hl.dsp.focus({ monitor = "l" }))
 hl.bind(MAIN_MOD .. "+ALT+L", hl.dsp.focus({ monitor = "r" }))

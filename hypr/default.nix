@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./links.nix
+    ./runner.nix
   ];
 
   wayland.windowManager.hyprland = {
@@ -48,10 +49,6 @@ in
   services.hyprpolkitagent.enable = true;
   services.hypridle.enable = true;
   programs.hyprlock.enable = true;
-  programs.rofi = {
-    enable = true;
-    theme = "lb";
-  };
   programs.quickshell = {
     enable = true;
     systemd = {
