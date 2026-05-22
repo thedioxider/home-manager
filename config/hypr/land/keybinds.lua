@@ -214,6 +214,10 @@ end
 -- Special workspace (scratchpad)
 hl.bind(MAIN_MOD .. "+grave", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(MAIN_MOD .. "+SHIFT+grave", hl.dsp.window.move({ workspace = "special:magic", follow = false }))
+hl.workspace_rule({
+	workspace = "special:magic",
+	layout = "master",
+})
 
 -- Scroll through existing workspaces with MAIN_MOD + scroll
 hl.bind(MAIN_MOD .. "+mouse_down", function()
