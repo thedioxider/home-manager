@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   services = {
     flatpak = {
@@ -22,4 +22,9 @@
     #   acceleration = "cuda";
     # };
   };
+
+  services.rescrobbled.enable = true;
+  systemd.user.services.rescrobbled.Install.WantedBy = lib.mkForce [ ];
+  home.shellAliases.scrobble-on = "systemctl --user start rescrobbled";
+  home.shellAliases.scrobble-off = "systemctl --user stop rescrobbled";
 }
