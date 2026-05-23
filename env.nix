@@ -14,6 +14,10 @@
     e = "nvim";
   };
 
+  home.sessionPath = [
+    "$HOME/.deno/bin"
+  ];
+
   xdg = {
     enable = true;
 

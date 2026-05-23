@@ -48,6 +48,7 @@
       gh
       chromium
       qdirstat
+      deno
     ])
     ++ (with pkgs; [
       telegram-desktop
