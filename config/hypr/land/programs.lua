@@ -4,7 +4,7 @@ M.terminal = "kitty"
 M.term_launch = M.terminal .. " sh -c"
 M.drun = "gtk-launch"
 
-M.launcher = "rofi -show drun -modes drun,window,run,filebrowser"
+M.launcher = "rofi -show drun"
 M.clipboard = "rofi-clipboard"
 M.emoji_picker = "rofimoji"
 

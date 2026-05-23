@@ -22,5 +22,7 @@
       source = globLink config "config/waybar";
       recursive = true;
     };
+
+    "rofi/config.rasi".source = globLink config "config/rofi/config.rasi";
   };
 }
