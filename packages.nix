@@ -54,5 +54,7 @@
       telegram-desktop
       obsidian
       android-studio
+      nixd
+      qt6.qtdeclarative
     ]);
 }
