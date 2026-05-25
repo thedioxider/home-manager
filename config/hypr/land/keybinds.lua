@@ -53,7 +53,7 @@ hl.bind(MAIN_MOD .. "+ALT+J", hl.dsp.focus({ monitor = "d" }))
 hl.bind(MAIN_MOD .. "+A", function()
 	smw.change_monitor("+1")
 end)
-hl.bind(MAIN_MOD .. "+SHIFT+A", hl.dsp.workspace.swap_monitors({ monitor1 = "current", monitor2 = "+1" }))
+hl.bind(MAIN_MOD .. "+SHIFT+A", hl.dsp.window.move({ monitor = "+1" }))
 
 hl.layer_rule({ match = { namespace = "selection" }, no_anim = true })
 hl.bind("Print", function()
@@ -65,13 +65,14 @@ hl.bind(MAIN_MOD .. "+left", hl.dsp.focus({ direction = "l" }))
 hl.bind(MAIN_MOD .. "+right", hl.dsp.focus({ direction = "r" }))
 hl.bind(MAIN_MOD .. "+up", hl.dsp.focus({ direction = "u" }))
 hl.bind(MAIN_MOD .. "+down", hl.dsp.focus({ direction = "d" }))
+
 -- Move focus with MAIN_MOD + vim motions
 hl.bind(
 	MAIN_MOD .. "+H",
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "l" }),
 		scrolling = function()
-			if hl.get_active_window() and hl.get_active_window().floating then
+			if #hl.get_monitors() > 1 or hl.get_active_window() and hl.get_active_window().floating then
 				hl.dispatch(hl.dsp.focus({ direction = "l" }))
 			else
 				hl.dispatch(hl.dsp.layout("focus l"))
@@ -84,7 +85,7 @@ hl.bind(
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "r" }),
 		scrolling = function()
-			if hl.get_active_window() and hl.get_active_window().floating then
+			if #hl.get_monitors() > 1 or hl.get_active_window() and hl.get_active_window().floating then
 				hl.dispatch(hl.dsp.focus({ direction = "r" }))
 			else
 				hl.dispatch(hl.dsp.layout("focus r"))
@@ -103,7 +104,11 @@ hl.bind(
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "u" }),
 		scrolling = function()
-			if not scrolling_col_single() or hl.get_active_window() and hl.get_active_window().floating then
+			if
+				#hl.get_monitors() > 1
+				or not scrolling_col_single()
+				or hl.get_active_window() and hl.get_active_window().floating
+			then
 				hl.dispatch(hl.dsp.focus({ direction = "u" }))
 			else
 				smw.workspace("m-1")
@@ -116,7 +121,11 @@ hl.bind(
 	dsp_by_layout({
 		default = hl.dsp.focus({ direction = "d" }),
 		scrolling = function()
-			if not scrolling_col_single() or hl.get_active_window() and hl.get_active_window().floating then
+			if
+				#hl.get_monitors() > 1
+				or not scrolling_col_single()
+				or hl.get_active_window() and hl.get_active_window().floating
+			then
 				hl.dispatch(hl.dsp.focus({ direction = "d" }))
 			else
 				smw.workspace("m+1")
