@@ -15,7 +15,8 @@ import qs.widgets.util
 PanelWindow {
     id: statusBar
 
-    property int barWidth: 48
+    readonly property int barWidth: 48
+    readonly property int cornerRadius: 24
 
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "status-bar"
@@ -30,7 +31,7 @@ PanelWindow {
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
     mask: Region {
-        item: barBg
+        item: barContent
         Region {
             item: connectivityList.hoverArea
         }
@@ -57,9 +58,10 @@ PanelWindow {
         objects: Pipewire.defaultAudioSink ? [Pipewire.defaultAudioSink] : []
     }
 
-    Rectangle {
+    BarBackground {
         id: barBg
         anchors.fill: barContent
+        radius: statusBar.cornerRadius
         color: Theme.palette.background
     }
 
