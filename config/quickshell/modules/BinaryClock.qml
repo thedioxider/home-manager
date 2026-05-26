@@ -20,7 +20,6 @@ PanelWindow {
     property int animationDuration: 250
 
     color: "transparent"
-    surfaceFormat.opaque: false
     implicitWidth: content.implicitWidth
     implicitHeight: content.implicitHeight
 
@@ -80,9 +79,15 @@ PanelWindow {
             id: grid
             spacing: root.particleSpacing
 
-            Segment { value: clock.hours }
-            Segment { value: clock.minutes }
-            Segment { value: clock.seconds }
+            Segment {
+                value: clock.hours
+            }
+            Segment {
+                value: clock.minutes
+            }
+            Segment {
+                value: clock.seconds
+            }
         }
     }
 

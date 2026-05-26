@@ -1,19 +1,34 @@
 import Quickshell
 import QtQuick
+import qs.config
+import qs.modules
+import qs.modules.bar
 
-Variants {
-    model: Quickshell.screens
+ShellRoot {
+    Variants {
+        model: Quickshell.screens
 
-    BinaryClock {
-        required property var modelData
+        BinaryClock {
+            required property var modelData
 
-        screen: modelData
+            screen: modelData
 
-        anchors {
-            bottom: true
-            right: true
+            anchors {
+                bottom: true
+                right: true
+            }
+
+            particleColor: Theme.palette.surface
         }
+    }
 
-        particleColor: "#42f566"
+    Variants {
+        model: Quickshell.screens
+
+        StatusBar {
+            required property var modelData
+
+            screen: modelData
+        }
     }
 }
