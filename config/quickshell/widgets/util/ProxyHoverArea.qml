@@ -1,11 +1,12 @@
 import QtQuick
+import qs.widgets.util
 
 Item {
     id: area
 
     required property PointerProxy proxy
 
-    signal clicked()
+    signal clicked
 
     readonly property point localPointer: mapFromItem(null, area.proxy.scenePosition.x, area.proxy.scenePosition.y)
     readonly property bool hovered: area.proxy.hovered && contains(area.localPointer)

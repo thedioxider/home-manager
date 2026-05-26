@@ -5,6 +5,7 @@ import Quickshell.Wayland
 import Quickshell.Networking
 import Quickshell.Bluetooth
 import Quickshell.Services.UPower
+import Quickshell.Services.Pipewire
 import QtQuick
 import QtQuick.Layouts
 import qs.config
@@ -31,7 +32,7 @@ PanelWindow {
     mask: Region {
         item: barBg
         Region {
-            item: statusList.hoverArea
+            item: connectivityList.hoverArea
         }
     }
 
@@ -45,6 +46,10 @@ PanelWindow {
         font.family: Theme.fonts.text
         font.pixelSize: 14
         color: Theme.palette.onBackground
+    }
+
+    PwObjectTracker {
+        objects: Pipewire.defaultAudioSink ? [Pipewire.defaultAudioSink] : []
     }
 
     Rectangle {
@@ -68,23 +73,14 @@ PanelWindow {
         }
 
         StatusCapsule {
-            id: statusList
+            id: connectivityList
             Layout.fillWidth: true
             Layout.margins: 6
             frame: 4
             barEdge: statusBar.barWidth - x
-            pointer: statusListHover
+            pointer: connectivityListProxy
 
             entries: [
-                StatusCapsuleItem {
-                    glyph: StatusGlyphItem {
-                        text: ":)"
-                        font.family: Theme.fonts.text
-                    }
-                    text: StatusTextItem {
-                        text: "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello"
-                    }
-                },
                 StatusCapsuleItem {
                     id: netItem
                     readonly property var _net: {
@@ -122,6 +118,32 @@ PanelWindow {
                     text: StatusTextItem {
                         text: btItem._btOn ? (btItem._connectedDev ? (btItem._connectedDev.batteryAvailable ? "[" + Math.round(btItem._connectedDev.battery * 100) + "%] " : "") + btItem._connectedDev.name : "On") : "Off"
                     }
+                }
+            ]
+        }
+
+        StatusCapsule {
+            id: levelList
+            Layout.fillWidth: true
+            Layout.margins: 6
+            frame: 4
+            barEdge: statusBar.barWidth - x
+            drawerWidth: iconBox * 2
+            pointer: levelListProxy
+
+            entries: [
+                StatusCapsuleItem {
+                    id: volItem
+                    readonly property var _sink: Pipewire.defaultAudioSink
+                    readonly property bool _muted: _sink && _sink.audio ? _sink.audio.muted : false
+                    readonly property int _vol: _sink && _sink.audio ? Math.round(_sink.audio.volume * 100) : 0
+                    glyph: StatusGlyphItem {
+                        text: volItem._muted ? "󰝟" : volItem._vol > 66 ? "󰕾" : volItem._vol > 0 ? "󰖀" : "󰕿"
+                    }
+                    text: StatusTextItem {
+                        text: volItem._muted ? "Muted" : volItem._vol + "%"
+                    }
+                    onClicked: Quickshell.execDetached(["kitty", "pulsemixer"])
                 },
                 StatusCapsuleItem {
                     id: batItem
@@ -146,6 +168,7 @@ PanelWindow {
             radius: width / 2
             color: Theme.palette.backgroundAlt
             rippleColor: Theme.palette.surface
+            onClicked: Quickshell.execDetached(["rofi", "-show", "drun"])
 
             StatusGlyphItem {
                 anchors.centerIn: parent
@@ -157,8 +180,12 @@ PanelWindow {
 
     // Pointer proxies, aren't cropped by parents
     PointerProxy {
-        id: statusListHover
-        target: statusList.hoverArea
+        id: connectivityListProxy
+        target: connectivityList.hoverArea
+    }
+    PointerProxy {
+        id: levelListProxy
+        target: levelList.hoverArea
     }
 
     // Separate exclusion zone, since the bar's window is full-screen
