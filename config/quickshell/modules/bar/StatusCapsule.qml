@@ -4,7 +4,6 @@ import QtQuick
 import QtQuick.Shapes
 import Quickshell.Widgets
 import qs.config
-import qs.widgets
 import qs.widgets.util
 
 Item {
@@ -72,47 +71,21 @@ Item {
         ShapePath {
             fillColor: Theme.palette.background
             strokeWidth: -1
-
-            startX: fs.frameLeft
-            startY: fs.frameTop - fs.radius + 2 * fs.deltaDistance
-
-            PathArc {
-                x: fs.concaveEndX
-                y: fs.frameTop + fs.deltaDistance
-                radiusX: fs.radius
-                radiusY: fs.radius
-                direction: PathArc.Counterclockwise
-            }
-            PathLine {
-                x: fs.convexStartX
-                y: fs.frameTop + fs.deltaDistance
-            }
-            PathArc {
-                x: fs.frameRight
-                y: fs.frameTop + fs.radius
-                radiusX: fs.radius
-                radiusY: fs.radius
-            }
-            PathLine {
-                x: fs.frameRight
-                y: fs.frameBottom - fs.radius
-            }
-            PathArc {
-                x: fs.convexStartX
-                y: fs.frameBottom - fs.deltaDistance
-                radiusX: fs.radius
-                radiusY: fs.radius
-            }
-            PathLine {
-                x: fs.concaveEndX
-                y: fs.frameBottom - fs.deltaDistance
-            }
-            PathArc {
-                x: fs.frameLeft
-                y: fs.frameBottom + fs.radius - 2 * fs.deltaDistance
-                radiusX: fs.radius
-                radiusY: fs.radius
-                direction: PathArc.Counterclockwise
+            PathSvg {
+                path: {
+                    const r = fs.radius;
+                    const d = fs.deltaDistance;
+                    return `
+                        M ${fs.frameLeft} ${fs.frameTop - r + 2 * d}
+                        A ${r} ${r} 0 0 0 ${fs.concaveEndX} ${fs.frameTop + d}
+                        L ${fs.convexStartX} ${fs.frameTop + d}
+                        A ${r} ${r} 0 0 1 ${fs.frameRight} ${fs.frameTop + r}
+                        L ${fs.frameRight} ${fs.frameBottom - r}
+                        A ${r} ${r} 0 0 1 ${fs.convexStartX} ${fs.frameBottom - d}
+                        L ${fs.concaveEndX} ${fs.frameBottom - d}
+                        A ${r} ${r} 0 0 0 ${fs.frameLeft} ${fs.frameBottom + r - 2 * d}
+                    `;
+                }
             }
         }
     }
