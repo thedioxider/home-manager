@@ -60,7 +60,8 @@ PanelWindow {
 
     BarBackground {
         id: barBg
-        anchors.fill: barContent
+        anchors.fill: parent
+        barWidth: statusBar.barWidth
         radius: statusBar.cornerRadius
         color: Theme.palette.background
     }
