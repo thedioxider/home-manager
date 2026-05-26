@@ -5,7 +5,7 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 0,
+		rounding = 24,
 
 		dim_modal = true,
 		dim_inactive = false,
