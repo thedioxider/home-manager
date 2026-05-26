@@ -12,6 +12,7 @@ Item {
     property real fadeWidth: 18  // px
 
     clip: true
+    implicitWidth: textWidth
     implicitHeight: primary ? primary.implicitHeight : 0
 
     readonly property Text primary: primaryLoader.item as Text

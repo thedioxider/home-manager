@@ -13,11 +13,26 @@ Item {
     required property list<StatusCapsuleItem> entries
     required property PointerProxy pointer
     readonly property int iconBox: width
-    property int drawerWidth: iconBox * 6
+    property int maxDrawerWidth: iconBox * 6
     property int frame: 4
     property int radius: iconBox / 2
     property real barEdge: iconBox
     property int animationDuration: 250
+
+    property var contentWidths: ({})
+    readonly property real drawerContentWidth: {
+        let m = 0;
+        for (let i = 0; i < entries.length; i++)
+            m = Math.max(m, contentWidths[i] ?? 0);
+        return m;
+    }
+    readonly property real drawerWidth: Math.min(maxDrawerWidth, drawerContentWidth + radius)
+
+    function reportWidth(index: int, w: real) {
+        let o = Object.assign({}, contentWidths);
+        o[index] = w;
+        contentWidths = o;
+    }
 
     property bool drawerOpen: pointer.hovered
     property real reveal: drawerOpen ? 1 : 0
@@ -125,6 +140,7 @@ Item {
                 delegate: Item {
                     id: row
                     required property var modelData
+                    required property int index
                     width: pill.width
                     height: root.iconBox
 
@@ -145,14 +161,15 @@ Item {
                         visible: root.reveal > 0
                         opacity: root.reveal
 
-                        MarqueeText {
+                        Loader {
+                            id: content
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.rightMargin: root.radius
                             height: parent.height
-                            backgroundColor: Theme.palette.backgroundAlt
-                            delegate: row.modelData.text
+                            sourceComponent: row.modelData.content
+                            onImplicitWidthChanged: root.reportWidth(row.index, implicitWidth)
                         }
                     }
 

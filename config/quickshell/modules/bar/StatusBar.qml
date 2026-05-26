@@ -42,10 +42,15 @@ PanelWindow {
         color: Theme.palette.onBackground
     }
 
-    component StatusTextItem: Text {
-        font.family: Theme.fonts.text
-        font.pixelSize: 14
-        color: Theme.palette.onBackground
+    component StatusTextItem: MarqueeText {
+        id: marqueeText
+        property string text
+        delegate: Text {
+            text: marqueeText.text
+            font.family: Theme.fonts.text
+            font.pixelSize: 14
+            color: Theme.palette.onBackground
+        }
     }
 
     PwObjectTracker {
@@ -97,7 +102,7 @@ PanelWindow {
                     glyph: StatusGlyphItem {
                         text: netItem._net ? "󰤨" : "󰤭"
                     }
-                    text: StatusTextItem {
+                    content: StatusTextItem {
                         text: netItem._net ? netItem._net.name : "Disconnected"
                     }
                 },
@@ -115,7 +120,7 @@ PanelWindow {
                     glyph: StatusGlyphItem {
                         text: btItem._btOn ? (btItem._connectedDev ? "󰂱" : "󰂯") : "󰂲"
                     }
-                    text: StatusTextItem {
+                    content: StatusTextItem {
                         text: btItem._btOn ? (btItem._connectedDev ? (btItem._connectedDev.batteryAvailable ? "[" + Math.round(btItem._connectedDev.battery * 100) + "%] " : "") + btItem._connectedDev.name : "On") : "Off"
                     }
                 }
@@ -128,7 +133,6 @@ PanelWindow {
             Layout.margins: 6
             frame: 4
             barEdge: statusBar.barWidth - x
-            drawerWidth: iconBox * 2
             pointer: levelListProxy
 
             entries: [
@@ -140,7 +144,7 @@ PanelWindow {
                     glyph: StatusGlyphItem {
                         text: volItem._muted ? "󰝟" : volItem._vol > 66 ? "󰕾" : volItem._vol > 0 ? "󰖀" : "󰕿"
                     }
-                    text: StatusTextItem {
+                    content: StatusTextItem {
                         text: volItem._muted ? "Muted" : volItem._vol + "%"
                     }
                     action: () => Quickshell.execDetached(["kitty", "pulsemixer"])
@@ -154,7 +158,7 @@ PanelWindow {
                     glyph: StatusGlyphItem {
                         text: !batItem._ready ? "󰂑" : batItem._charging ? "󰂄" : batItem._pct > 90 ? "󰁹" : batItem._pct > 80 ? "󰂂" : batItem._pct > 70 ? "󰂁" : batItem._pct > 60 ? "󰂀" : batItem._pct > 50 ? "󰁿" : batItem._pct > 40 ? "󰁾" : batItem._pct > 30 ? "󰁽" : batItem._pct > 20 ? "󰁼" : batItem._pct > 10 ? "󰁻" : "󰁺"
                     }
-                    text: StatusTextItem {
+                    content: StatusTextItem {
                         text: batItem._ready ? batItem._pct + "%" : "N/A"
                     }
                 }
