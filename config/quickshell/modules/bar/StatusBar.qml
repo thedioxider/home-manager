@@ -143,7 +143,7 @@ PanelWindow {
                     text: StatusTextItem {
                         text: volItem._muted ? "Muted" : volItem._vol + "%"
                     }
-                    onClicked: Quickshell.execDetached(["kitty", "pulsemixer"])
+                    action: () => Quickshell.execDetached(["kitty", "pulsemixer"])
                 },
                 StatusCapsuleItem {
                     id: batItem

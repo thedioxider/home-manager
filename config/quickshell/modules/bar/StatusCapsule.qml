@@ -160,7 +160,8 @@ Item {
                         id: rowHover
                         anchors.fill: parent
                         proxy: root.pointer
-                        onClicked: row.modelData.clicked()
+                        active: row.modelData.action !== null
+                        onClicked: row.modelData.action()
                     }
 
                     Rectangle {
