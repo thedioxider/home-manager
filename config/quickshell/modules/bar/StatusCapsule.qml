@@ -19,20 +19,7 @@ Item {
     property real barEdge: iconBox
     property int animationDuration: 250
 
-    property var contentWidths: ({})
-    readonly property real drawerContentWidth: {
-        let m = 0;
-        for (let i = 0; i < entries.length; i++)
-            m = Math.max(m, contentWidths[i] ?? 0);
-        return m;
-    }
-    readonly property real drawerWidth: Math.min(maxDrawerWidth, drawerContentWidth + radius)
-
-    function reportWidth(index: int, w: real) {
-        let o = Object.assign({}, contentWidths);
-        o[index] = w;
-        contentWidths = o;
-    }
+    readonly property real drawerWidth: Math.min(maxDrawerWidth, contentWidths.max + radius)
 
     property bool drawerOpen: pointer.hovered
     property real reveal: drawerOpen ? 1 : 0
@@ -46,6 +33,11 @@ Item {
     property alias hoverArea: footprint
 
     implicitHeight: iconBox * entries.length
+
+    MaxAggregator {
+        id: contentWidths
+        count: root.entries.length
+    }
 
     Item {
         id: footprint
@@ -169,7 +161,7 @@ Item {
                             anchors.rightMargin: root.radius
                             height: parent.height
                             sourceComponent: row.modelData.content
-                            onImplicitWidthChanged: root.reportWidth(row.index, implicitWidth)
+                            onImplicitWidthChanged: contentWidths.report(row.index, implicitWidth)
                         }
                     }
 
@@ -184,7 +176,7 @@ Item {
                     Rectangle {
                         anchors.fill: parent
                         color: Theme.palette.surface
-                        opacity: rowHover.hovered ? 0.4 : 0
+                        opacity: rowHover.hovered ? 0.2 : 0
                         Behavior on opacity {
                             NumberAnimation {
                                 duration: 200
