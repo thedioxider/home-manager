@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import Quickshell.Networking
 import Quickshell.Bluetooth
 import Quickshell.Services.UPower
@@ -19,6 +20,7 @@ PanelWindow {
     readonly property int cornerRadius: 24
     readonly property int itemMargins: 6
     readonly property int capsuleFrame: itemMargins
+    readonly property HyprlandMonitor hyprMonitor: Hyprland.monitorFor(screen)
 
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "status-bar"
@@ -61,7 +63,7 @@ PanelWindow {
         text: Qt.formatTime(clock.date, format)
         fontSizeMode: Text.HorizontalFit
         font.pixelSize: statusBar.barWidth
-        height: contentHeight
+        height: implicitWidth / 2
         anchors {
             left: clockWidget.left
             right: clockWidget.right
@@ -114,6 +116,42 @@ PanelWindow {
             }
         }
 
+        StatusCapsule {
+            id: workspacesWidget
+            Layout.fillWidth: true
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
+            barEdge: statusBar.barWidth - x
+            pointer: workspacesWidgetProxy
+            drawerOpen: false
+
+            Instantiator {
+                id: workspaces
+                model: Hyprland.workspaces.values.filter(ws => ws.monitor == statusBar.hyprMonitor)
+                delegate: StatusCapsuleItem {
+                    id: item
+                    required property HyprlandWorkspace modelData
+                    glyph: StatusGlyphItem {
+                        text: item.modelData.id
+                        font.family: Theme.fonts.text
+                        font.bold: true
+                        font.pixelSize: statusBar.barWidth / 2
+                        color: item.modelData.active ? Theme.palette.surface : Theme.palette.onBackground
+                    }
+                    content: StatusTextItem {
+                        text: ""
+                    }
+                    action: modelData.active ? null : () => modelData.activate()
+                }
+            }
+            entries: {
+                let arr = [];
+                for (let i = 0; i < workspaces.count; i++)
+                    arr.push(workspaces.objectAt(i));
+                return arr;
+            }
+        }
+
         Item {
             Layout.fillHeight: true
         }
@@ -132,11 +170,9 @@ PanelWindow {
                     readonly property var _net: {
                         let devs = Networking.devices.values;
                         for (var i = 0; i < devs.length; i++) {
-                            let nets = devs[i].networks.values;
-                            for (var j = 0; j < nets.length; j++) {
-                                if (nets[j].connected)
-                                    return nets[j];
-                            }
+                            let net = devs[i].networks.values.find(net => net.connected);
+                            if (net)
+                                return net;
                         }
                         return null;
                     }
@@ -151,11 +187,9 @@ PanelWindow {
                     id: btItem
                     readonly property bool _btOn: Bluetooth.defaultAdapter ? Bluetooth.defaultAdapter.enabled : false
                     readonly property var _connectedDev: {
-                        let devs = Bluetooth.devices ? Bluetooth.devices.values : [];
-                        for (var i = 0; i < devs.length; i++) {
-                            if (devs[i].connected)
-                                return devs[i];
-                        }
+                        let dev = (Bluetooth.devices ? Bluetooth.devices.values : []).find(dev => dev.connected);
+                        if (dev)
+                            return dev;
                         return null;
                     }
                     glyph: StatusGlyphItem {
@@ -224,6 +258,10 @@ PanelWindow {
     }
 
     // Pointer proxies, aren't cropped by parents
+    PointerProxy {
+        id: workspacesWidgetProxy
+        target: workspacesWidget.hoverArea
+    }
     PointerProxy {
         id: connectivityListProxy
         target: connectivityList.hoverArea
