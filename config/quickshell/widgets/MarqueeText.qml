@@ -6,17 +6,20 @@ Item {
     property Component delegate
 
     property color backgroundColor: "black"
+    property bool play: true
+    property real padding: 0
     property real speed: 32  // px/s
     property int pauseDuration: 1500  // ms held still between cycles
     property real gap: 24  // px between text repetitions
     property real fadeWidth: 18  // px
 
     clip: true
+    implicitWidth: textWidth
     implicitHeight: primary ? primary.implicitHeight : 0
 
     readonly property Text primary: primaryLoader.item as Text
     readonly property real textWidth: primary ? primary.contentWidth : 0
-    readonly property bool overflows: root.width > 0 && textWidth > root.width
+    property bool overflows: root.width > 0 && textWidth > root.width
     readonly property real cycleDist: textWidth + gap
     readonly property int cycleMs: speed > 0 ? Math.round(cycleDist / speed * 1000) : 0
 
@@ -24,7 +27,7 @@ Item {
         id: track
         anchors.verticalCenter: parent.verticalCenter
         spacing: root.gap
-        x: 0
+        x: root.overflows ? root.padding : 0
 
         Loader {
             id: primaryLoader
@@ -36,25 +39,26 @@ Item {
         }
 
         SequentialAnimation on x {
-            running: root.overflows && root.visible
+            running: root.play && root.overflows && root.visible
             loops: Animation.Infinite
             PauseAnimation {
                 duration: root.pauseDuration
             }
             NumberAnimation {
-                to: -root.cycleDist
+                from: root.padding
+                to: root.padding - root.cycleDist
                 duration: root.cycleMs
                 easing.type: Easing.Linear
             }
             NumberAnimation {
-                to: 0
+                to: root.padding
                 duration: 0
             }
         }
     }
 
     Rectangle {
-        visible: root.overflows && track.x < 0
+        visible: root.overflows && track.x - root.padding < 0
         anchors {
             left: parent.left
             top: parent.top

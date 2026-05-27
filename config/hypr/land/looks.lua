@@ -5,7 +5,7 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 0,
+		rounding = 24,
 
 		dim_modal = true,
 		dim_inactive = false,
@@ -24,9 +24,13 @@ hl.layer_rule({
 	blur = true,
 	ignore_alpha = 0.2,
 })
-
 hl.layer_rule({
 	match = { namespace = "rofi" },
+	blur = true,
+	ignore_alpha = 0.2,
+})
+hl.layer_rule({
+	match = { namespace = "status-bar-power" },
 	blur = true,
 	ignore_alpha = 0.2,
 })

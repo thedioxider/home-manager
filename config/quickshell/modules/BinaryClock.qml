@@ -101,7 +101,7 @@ PanelWindow {
             visible: parent.containsMouse
             x: (parent.width - width) / 2
             y: (parent.height - height) / 2
-            text: Qt.formatTime(new Date(0, 0, 0, clock.hours, clock.minutes, clock.seconds), "HH:mm:ss")
+            text: Qt.formatTime(clock.date, "HH:mm:ss")
 
             contentItem: Text {
                 text: tip.text

@@ -5,10 +5,9 @@ Item {
 
     required property Item target
 
+    readonly property alias hover: hover
+    readonly property alias tap: tap
     readonly property alias hovered: hover.hovered
-    readonly property point scenePosition: hover.point.scenePosition
-
-    signal tapped(point scenePos)
 
     // Sum local positions up the parent chain. Reading each ancestor's x/y
     // registers it as a binding dependency, so this re-evaluates whenever the
@@ -32,10 +31,11 @@ Item {
 
     HoverHandler {
         id: hover
-        blocking: false
     }
 
     TapHandler {
-        onTapped: eventPoint => proxy.tapped(eventPoint.scenePosition)
+        id: tap
+        exclusiveSignals: TapHandler.SingleTap | TapHandler.DoubleTap
+        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
     }
 }
