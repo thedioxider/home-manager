@@ -20,7 +20,7 @@ Item {
 
     readonly property real drawerWidth: Math.min(maxDrawerWidth, contentWidths.max + radius)
 
-    property bool drawerOpen: pointer.hovered
+    property bool drawerOpen: pointer && pointer.hovered
     property real reveal: drawerOpen ? 1 : 0
     Behavior on reveal {
         NumberAnimation {

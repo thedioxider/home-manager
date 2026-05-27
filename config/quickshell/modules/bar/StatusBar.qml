@@ -17,6 +17,8 @@ PanelWindow {
 
     readonly property int barWidth: 48
     readonly property int cornerRadius: 24
+    readonly property int itemMargins: 6
+    readonly property int capsuleFrame: itemMargins
 
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "status-bar"
@@ -39,7 +41,7 @@ PanelWindow {
 
     component StatusGlyphItem: Text {
         font.family: Theme.fonts.symbols
-        font.pixelSize: (statusBar.barWidth - 12) / 2
+        font.pixelSize: (statusBar.barWidth - 2 * statusBar.itemMargins) / 2
         color: Theme.palette.onBackground
     }
 
@@ -99,7 +101,7 @@ PanelWindow {
         Column {
             id: clockWidget
             Layout.fillWidth: true
-            Layout.margins: 8
+            Layout.margins: statusBar.itemMargins * 1.2
             ClockPieceItem {
                 format: "HH"
             }
@@ -119,8 +121,8 @@ PanelWindow {
         StatusCapsule {
             id: connectivityList
             Layout.fillWidth: true
-            Layout.margins: 6
-            frame: 4
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
             barEdge: statusBar.barWidth - x
             pointer: connectivityListProxy
 
@@ -169,8 +171,8 @@ PanelWindow {
         StatusCapsule {
             id: levelList
             Layout.fillWidth: true
-            Layout.margins: 6
-            frame: 4
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
             barEdge: statusBar.barWidth - x
             pointer: levelListProxy
 
@@ -206,7 +208,7 @@ PanelWindow {
 
         RippleButton {
             Layout.fillWidth: true
-            Layout.margins: 6
+            Layout.margins: statusBar.itemMargins
             implicitHeight: width
             radius: width / 2
             color: Theme.palette.backgroundAlt
