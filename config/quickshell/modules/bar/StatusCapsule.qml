@@ -142,8 +142,10 @@ Item {
                         id: rowHover
                         anchors.fill: parent
                         proxy: root.pointer
-                        active: row.modelData.action !== null
-                        onClicked: row.modelData.action()
+                        active: row.modelData.action !== null || row.modelData.secondaryAction !== null || row.modelData.tertiaryAction !== null
+                        onLeftClicked: pos => row.modelData.action(pos)
+                        onRightClicked: pos => row.modelData.secondaryAction(pos)
+                        onMiddleClicked: pos => row.modelData.tertiaryAction(pos)
                     }
 
                     Rectangle {

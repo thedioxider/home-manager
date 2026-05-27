@@ -6,20 +6,59 @@ Item {
 
     required property PointerProxy proxy
     property bool active: true
+    property bool useDoubleClick: false
 
-    signal clicked
+    function toLocalPoint(point) {
+        return mapFromItem(null, point.x, point.y);
+    }
 
-    readonly property point localPointer: active ? mapFromItem(null, area.proxy.scenePosition.x, area.proxy.scenePosition.y) : null
-    readonly property bool hovered: active && area.proxy.hovered && contains(area.localPointer)
+    signal leftClicked(point pos)
+    signal rightClicked(point pos)
+    signal middleClicked(point pos)
+    signal doubleClicked(point pos)
+
+    readonly property point localPointer: (active && proxy.hovered) ? toLocalPoint(proxy.hover.point.scenePosition) : null
+    readonly property bool hovered: active && proxy.hovered && contains(localPointer)
 
     Connections {
-        target: area.proxy
-        function onTapped(scenePos) {
-            if (!area.active)
+        enabled: area.active
+        target: area.proxy.hover
+    }
+
+    Connections {
+        id: doubleClickConnections
+        enabled: area.active && area.useDoubleClick
+        target: area.proxy.tap
+        function onSingleTapped(eventPoint, button) {
+            const lp = area.toLocalPoint(eventPoint.scenePosition);
+            if (!area.contains(lp))
                 return;
-            const lp = area.mapFromItem(null, scenePos.x, scenePos.y);
-            if (area.contains(lp))
-                area.clicked();
+            switch (button) {
+            case Qt.LeftButton:
+                area.leftClicked(eventPoint.scenePosition);
+                break;
+            case Qt.RightButton:
+                area.rightClicked(eventPoint.scenePosition);
+                break;
+            case Qt.MiddleButton:
+                area.middleClicked(eventPoint.scenePosition);
+            }
+        }
+        function onDoubleTapped(eventPoint, button) {
+            const lp = area.toLocalPoint(eventPoint.scenePosition);
+            if (!area.contains(lp))
+                return;
+            switch (button) {
+            case Qt.LeftButton:
+                area.doubleClicked(eventPoint.scenePosition);
+            }
+        }
+    }
+    Connections {
+        enabled: area.active && !area.useDoubleClick
+        target: area.proxy.tap
+        function onTapped(eventPoint, button) {
+            doubleClickConnections.onSingleTapped(eventPoint, button);
         }
     }
 }

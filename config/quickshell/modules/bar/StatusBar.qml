@@ -39,7 +39,16 @@ PanelWindow {
     mask: Region {
         item: barContent
         Region {
+            item: workspacesWidget.hoverArea
+        }
+        Region {
+            item: trayWidget.hoverArea
+        }
+        Region {
             item: connectivityList.hoverArea
+        }
+        Region {
+            item: levelList.hoverArea
         }
     }
 
@@ -129,7 +138,7 @@ PanelWindow {
 
             Instantiator {
                 id: workspaces
-                model: Hyprland.workspaces.values.filter(ws => ws.monitor == statusBar.hyprMonitor)
+                model: Hyprland.workspaces.values.filter(ws => ws.monitor == statusBar.hyprMonitor && ws.id > 0)
                 delegate: StatusCapsuleItem {
                     id: workspaceItem
                     required property HyprlandWorkspace modelData
@@ -180,6 +189,8 @@ PanelWindow {
                         text: trayItem.modelData.title
                     }
                     action: () => trayItem.modelData.activate()
+                    secondaryAction: pos => trayItem.modelData.display(statusBar, pos.x, pos.y)
+                    tertiaryAction: () => trayItem.modelData.secondaryActivate()
                 }
             }
             entries: {
