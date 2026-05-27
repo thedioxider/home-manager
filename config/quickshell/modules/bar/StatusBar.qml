@@ -1,12 +1,14 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
+import Quickshell.Widgets
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import Quickshell.Networking
 import Quickshell.Bluetooth
 import Quickshell.Services.UPower
 import Quickshell.Services.Pipewire
+import Quickshell.Services.SystemTray
 import QtQuick
 import QtQuick.Layouts
 import qs.config
@@ -129,14 +131,14 @@ PanelWindow {
                 id: workspaces
                 model: Hyprland.workspaces.values.filter(ws => ws.monitor == statusBar.hyprMonitor)
                 delegate: StatusCapsuleItem {
-                    id: item
+                    id: workspaceItem
                     required property HyprlandWorkspace modelData
                     glyph: StatusGlyphItem {
-                        text: item.modelData.id
+                        text: workspaceItem.modelData.id
                         font.family: Theme.fonts.text
                         font.bold: true
                         font.pixelSize: statusBar.barWidth / 2
-                        color: item.modelData.active ? Theme.palette.surface : Theme.palette.onBackground
+                        color: workspaceItem.modelData.active ? Theme.palette.surface : Theme.palette.onBackground
                     }
                     content: StatusTextItem {
                         text: ""
@@ -146,7 +148,7 @@ PanelWindow {
             }
             entries: {
                 let arr = [];
-                for (let i = 0; i < workspaces.count; i++)
+                for (let i = 0; i < workspaces.count; ++i)
                     arr.push(workspaces.objectAt(i));
                 return arr;
             }
@@ -154,6 +156,38 @@ PanelWindow {
 
         Item {
             Layout.fillHeight: true
+        }
+
+        StatusCapsule {
+            id: trayWidget
+            Layout.fillWidth: true
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
+            barEdge: statusBar.barWidth - x
+            pointer: trayWidgetProxy
+
+            Instantiator {
+                id: trayItems
+                model: SystemTray.items
+                delegate: StatusCapsuleItem {
+                    id: trayItem
+                    required property SystemTrayItem modelData
+                    glyph: IconImage {
+                        source: trayItem.modelData.icon
+                        implicitSize: trayWidget.width - 2 * statusBar.itemMargins
+                    }
+                    content: StatusTextItem {
+                        text: trayItem.modelData.title
+                    }
+                    action: () => trayItem.modelData.activate()
+                }
+            }
+            entries: {
+                let arr = [];
+                for (let i = 0; i < trayItems.count; ++i)
+                    arr.push(trayItems.objectAt(i));
+                return arr;
+            }
         }
 
         StatusCapsule {
@@ -261,6 +295,10 @@ PanelWindow {
     PointerProxy {
         id: workspacesWidgetProxy
         target: workspacesWidget.hoverArea
+    }
+    PointerProxy {
+        id: trayWidgetProxy
+        target: trayWidget.hoverArea
     }
     PointerProxy {
         id: connectivityListProxy
