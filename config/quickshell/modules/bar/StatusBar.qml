@@ -54,8 +54,28 @@ PanelWindow {
         }
     }
 
+    component ClockPieceItem: Text {
+        required property string format
+        text: Qt.formatTime(clock.date, format)
+        fontSizeMode: Text.HorizontalFit
+        font.pixelSize: statusBar.barWidth
+        height: contentHeight
+        anchors {
+            left: clockWidget.left
+            right: clockWidget.right
+        }
+        font.family: Theme.fonts.text
+        font.bold: true
+        color: Theme.palette.onBackground
+    }
+
     PwObjectTracker {
         objects: Pipewire.defaultAudioSink ? [Pipewire.defaultAudioSink] : []
+    }
+
+    SystemClock {
+        id: clock
+        precision: SystemClock.Seconds
     }
 
     BarBackground {
@@ -75,6 +95,22 @@ PanelWindow {
         }
         width: statusBar.barWidth
         spacing: 0
+
+        Column {
+            id: clockWidget
+            Layout.fillWidth: true
+            Layout.margins: 8
+            ClockPieceItem {
+                format: "HH"
+            }
+            ClockPieceItem {
+                format: "mm"
+            }
+            ClockPieceItem {
+                format: "ss"
+                opacity: 0.3
+            }
+        }
 
         Item {
             Layout.fillHeight: true
