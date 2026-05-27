@@ -144,16 +144,16 @@ PanelWindow {
                     id: workspaceItem
                     required property HyprlandWorkspace modelData
                     glyph: StatusGlyphItem {
-                        text: workspaceItem.modelData.id
+                        text: workspaceItem.modelData && workspaceItem.modelData.id
                         font.family: Theme.fonts.text
                         font.bold: true
                         font.pixelSize: statusBar.barWidth / 2
-                        color: workspaceItem.modelData.active ? Theme.palette.surface : Theme.palette.onBackground
+                        color: (workspaceItem.modelData && workspaceItem.modelData.active) ? Theme.palette.surface : Theme.palette.onBackground
                     }
                     content: StatusTextItem {
                         text: ""
                     }
-                    action: modelData.active ? null : () => modelData.activate()
+                    action: (modelData && modelData.active) ? null : () => modelData.activate()
                 }
             }
             entries: {
@@ -172,7 +172,7 @@ PanelWindow {
             radius: width / 2
             color: activeWindow !== null ? Theme.palette.backgroundAlt : "transparent"
 
-            readonly property HyprlandToplevel activeWindow: (Hyprland.activeToplevel && Hyprland.activeToplevel.workspace.active) ? Hyprland.activeToplevel : null
+            readonly property HyprlandToplevel activeWindow: (Hyprland.activeToplevel && Hyprland.activeToplevel.workspace && Hyprland.activeToplevel.workspace.active) ? Hyprland.activeToplevel : null
 
             Item {
                 visible: windowTitle.activeWindow !== null
@@ -333,7 +333,7 @@ PanelWindow {
             radius: width / 2
             color: Theme.palette.backgroundAlt
             rippleColor: Theme.palette.surface
-            onClicked: Quickshell.execDetached(["rofi", "-show", "drun"])
+            onClicked: powerMenuScreen.visible = !powerMenuScreen.visible
 
             StatusGlyphItem {
                 anchors.centerIn: parent
@@ -379,5 +379,128 @@ PanelWindow {
         exclusionMode: ExclusionMode.Normal
         exclusiveZone: statusBar.barWidth
         mask: Region {}
+    }
+
+    component PowerButton: ClippingWrapperRectangle {
+        id: powerButton
+        required property string icon
+        required property string label
+
+        signal click
+
+        focus: hover.hovered
+
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        border {
+            color: Theme.palette.surface
+            width: 4
+        }
+        color: "transparent"
+        radius: 48
+        implicitWidth: height
+
+        Item {
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.palette.background
+                opacity: 0.5
+            }
+
+            Column {
+                spacing: 16
+                anchors.centerIn: parent
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: powerButton.icon
+                    font.family: Theme.fonts.symbols
+                    font.pixelSize: powerButton.height / 3
+                    color: Theme.palette.onBackground
+                }
+                Text {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: powerButton.label
+                    font.family: Theme.fonts.text
+                    font.pixelSize: 36
+                    color: Theme.palette.onBackground
+                }
+            }
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.palette.surface
+                opacity: powerButton.focus ? 0.2 : 0
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 200
+                        easing: Easing.OutCubic
+                    }
+                }
+            }
+        }
+        HoverHandler {
+            id: hover
+        }
+        TapHandler {
+            onTapped: {
+                powerMenuScreen.visible = false;
+                powerButton.click();
+            }
+        }
+    }
+
+    PanelWindow {
+        id: powerMenuScreen
+        screen: statusBar.screen
+        visible: false
+        focusable: true
+
+        WlrLayershell.layer: WlrLayer.Overlay
+        WlrLayershell.namespace: "status-bar-power"
+
+        anchors {
+            left: true
+            top: true
+            right: true
+            bottom: true
+        }
+
+        color: "transparent"
+        exclusionMode: ExclusionMode.Ignore
+
+        RowLayout {
+            anchors.centerIn: parent
+            spacing: 60
+            height: 300
+
+            PowerButton {
+                id: power1
+                icon: ""
+                label: "Lock"
+                onClick: Quickshell.execDetached(["loginctl", "lock-session"])
+                KeyNavigation.left: power3
+                KeyNavigation.right: power2
+            }
+            PowerButton {
+                id: power2
+                icon: ""
+                label: "Power Off"
+                onClick: Quickshell.execDetached(["hyprshutdown", "--post-cmd", "'poweroff'"])
+                KeyNavigation.left: power1
+                KeyNavigation.right: power3
+            }
+            PowerButton {
+                id: power3
+                icon: ""
+                label: "Reboot"
+                onClick: Quickshell.execDetached(["hyprshutdown", "--post-cmd", "'reboot'"])
+                KeyNavigation.left: power2
+                KeyNavigation.right: power1
+            }
+        }
+        TapHandler {
+            onTapped: powerMenuScreen.visible = false
+        }
+        KeyNavigation.left: power3
+        KeyNavigation.right: power1
     }
 }
