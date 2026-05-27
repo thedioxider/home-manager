@@ -61,6 +61,7 @@ PanelWindow {
     component StatusTextItem: MarqueeText {
         id: marqueeText
         property string text
+        backgroundColor: Theme.palette.backgroundAlt
         delegate: Text {
             text: marqueeText.text
             font.family: Theme.fonts.text
@@ -163,8 +164,48 @@ PanelWindow {
             }
         }
 
-        Item {
+        ClippingRectangle {
+            id: windowTitle
+            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.margins: 6
+            radius: width / 2
+            color: activeWindow !== null ? Theme.palette.backgroundAlt : "transparent"
+
+            readonly property HyprlandToplevel activeWindow: (Hyprland.activeToplevel && Hyprland.activeToplevel.workspace.active) ? Hyprland.activeToplevel : null
+
+            Item {
+                visible: windowTitle.activeWindow !== null
+                y: windowTitle.height
+                transform: Rotation {
+                    angle: -90
+                }
+                width: windowTitle.height
+                height: windowTitle.width
+
+                MarqueeText {
+                    id: windowTitleMarquee
+
+                    overflows: textWidth + 2 * padding > parent.width
+                    width: overflows ? parent.width : textWidth
+                    height: parent.height - 2 * statusBar.itemMargins
+                    anchors.centerIn: parent
+
+                    backgroundColor: Theme.palette.backgroundAlt
+                    delegate: Text {
+                        text: windowTitle.activeWindow && windowTitle.activeWindow.title
+                        font.family: Theme.fonts.text
+                        font.pixelSize: statusBar.barWidth
+                        fontSizeMode: Text.VerticalFit
+                        width: contentWidth
+                        height: windowTitleMarquee.height
+                        color: Theme.palette.onBackground
+                    }
+
+                    padding: windowTitle.radius
+                    gap: windowTitle.radius + 16
+                }
+            }
         }
 
         StatusCapsule {
