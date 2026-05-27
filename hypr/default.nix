@@ -57,11 +57,11 @@ in
     };
   };
   programs.waybar = {
-    enable = true;
-    systemd = {
-      enable = true;
-      targets = [ "hyprland-session.target" ];
-    };
+    enable = false;
+    # systemd = {
+    #   enable = true;
+    #   targets = [ "hyprland-session.target" ];
+    # };
   };
   services.awww.enable = true;
 }
