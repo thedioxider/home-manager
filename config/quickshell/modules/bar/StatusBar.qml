@@ -9,6 +9,7 @@ import Quickshell.Bluetooth
 import Quickshell.Services.UPower
 import Quickshell.Services.Pipewire
 import Quickshell.Services.SystemTray
+import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import qs.config
@@ -92,6 +93,66 @@ PanelWindow {
     SystemClock {
         id: clock
         precision: SystemClock.Seconds
+    }
+
+    QtObject {
+        id: keyboardLayout
+
+        property string name: ""
+        readonly property string shortName: shortLayoutName(name)
+
+        function shortLayoutName(layout) {
+            const lower = layout.toLowerCase();
+            if (lower.includes("russian") || lower === "ru")
+                return "ru";
+            if (lower.includes("english") || lower.includes("us"))
+                return "en";
+            return layout ? layout.substring(0, 2).toUpperCase() : "--";
+        }
+
+        function updateFromDevicesJson(json) {
+            const devices = JSON.parse(json);
+            const keyboards = devices.keyboards || [];
+            const keyboard = keyboards.find(kbd => kbd.main) || keyboards[0];
+            if (keyboard && keyboard.active_keymap)
+                name = keyboard.active_keymap;
+        }
+
+        function updateFromActiveLayoutEvent(data) {
+            const keyboardSeparator = data.indexOf(",");
+            if (keyboardSeparator === -1)
+                return;
+
+            const beforeParenthesis = data.includes("(") ? data.substring(0, data.lastIndexOf("(")) : data;
+            const layoutSeparator = beforeParenthesis.lastIndexOf(",");
+            if (layoutSeparator === -1)
+                return;
+
+            name = data.substring(layoutSeparator + 1).trim();
+        }
+    }
+
+    Process {
+        id: keyboardLayoutInit
+        running: true
+        command: ["hyprctl", "devices", "-j"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                try {
+                    keyboardLayout.updateFromDevicesJson(text);
+                } catch (e) {
+                    console.warn(`Failed to read keyboard layout: ${e}`);
+                }
+            }
+        }
+    }
+
+    Connections {
+        target: Hyprland
+        function onRawEvent(event) {
+            if (event.name === "activelayout")
+                keyboardLayout.updateFromActiveLayoutEvent(event.data);
+        }
     }
 
     BarBackground {
@@ -284,6 +345,34 @@ PanelWindow {
                     }
                     content: StatusTextItem {
                         text: btItem._btOn ? (btItem._connectedDev ? (btItem._connectedDev.batteryAvailable ? "[" + Math.round(btItem._connectedDev.battery * 100) + "%] " : "") + btItem._connectedDev.name : "On") : "Off"
+                    }
+                }
+            ]
+        }
+
+        StatusCapsule {
+            id: keyboardLayoutWidget
+            Layout.fillWidth: true
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
+            barEdge: statusBar.barWidth - x
+            pointer: null
+            drawerOpen: false
+
+            entries: [
+                StatusCapsuleItem {
+                    glyph: StatusGlyphItem {
+                        text: keyboardLayout.shortName
+                        font.family: Theme.fonts.text
+                        font.pixelSize: statusBar.barWidth
+                        fontSizeMode: Text.Fit
+                        width: keyboardLayoutWidget.width - 2 * statusBar.itemMargins
+                        height: keyboardLayoutWidget.width - 2 * statusBar.itemMargins
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    content: StatusTextItem {
+                        text: ""
                     }
                 }
             ]
