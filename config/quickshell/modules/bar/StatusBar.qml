@@ -144,13 +144,14 @@ PanelWindow {
                     id: workspaceItem
                     required property HyprlandWorkspace modelData
                     glyph: StatusGlyphItem {
-                        text: workspaceItem.modelData && workspaceItem.modelData.id
+                        text: ""
                         font.family: Theme.fonts.text
                         font.bold: true
                         font.pixelSize: statusBar.barWidth / 2
                         color: (workspaceItem.modelData && workspaceItem.modelData.active) ? Theme.palette.surface : Theme.palette.onBackground
                     }
                     content: StatusTextItem {
+                        // text: workspaceItem.modelData && workspaceItem.modelData.toplevels.values.map(tl => tl.title).join(", ")
                         text: ""
                     }
                     action: (modelData && modelData.active) ? null : () => modelData.activate()
@@ -172,7 +173,7 @@ PanelWindow {
             radius: width / 2
             color: activeWindow !== null ? Theme.palette.backgroundAlt : "transparent"
 
-            readonly property HyprlandToplevel activeWindow: (Hyprland.activeToplevel && Hyprland.activeToplevel.workspace && Hyprland.activeToplevel.workspace.active) ? Hyprland.activeToplevel : null
+            readonly property HyprlandToplevel activeWindow: (Hyprland.activeToplevel && Hyprland.activeToplevel.workspace && Hyprland.activeToplevel.workspace.active && Hyprland.activeToplevel.monitor == statusBar.hyprMonitor) ? Hyprland.activeToplevel : null
 
             Item {
                 visible: windowTitle.activeWindow !== null
