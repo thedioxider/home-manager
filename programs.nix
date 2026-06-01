@@ -24,6 +24,7 @@
     #   enable = true;
     #   package = pkgs.unstable.claude-code;
     # };
+    opencode.enable = true;
     distrobox.enable = true;
   };
 }
