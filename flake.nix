@@ -4,7 +4,7 @@
   inputs = {
     home-manager.url = "home-manager/master";
     nixpkgs.follows = "home-manager/nixpkgs";
-    nixpkgs-stable.url = "nixpkgs/nixos-25.11";
+    nixpkgs-stable.url = "nixpkgs/nixos-26.05";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
@@ -12,7 +12,7 @@
     };
     hyprland.url = "github:hyprwm/Hyprland/v0.55.2";
     hyprland-split-monitor-workspaces = {
-      url = "github:Duckonaut/split-monitor-workspaces/v0.55.1";
+      url = "github:Duckonaut/split-monitor-workspaces/v0.55.2";
       inputs.hyprland.follows = "hyprland";
     };
   };
@@ -28,13 +28,12 @@
     let
       system = "x86_64-linux";
       allowUnfreePredicate = import ./unfree.nix nixpkgs.lib;
+      permittedInsecurePackages = [ ];
       pkgs = import nixpkgs {
         inherit system;
         config = {
           inherit allowUnfreePredicate;
-          permittedInsecurePackages = [
-            "openclaw-2026.3.12"
-          ];
+          inherit permittedInsecurePackages;
         };
         overlays = [
           (self: super: {
@@ -42,6 +41,7 @@
             stable = import nixpkgs-stable {
               inherit (self.stdenv.hostPlatform) system;
               config = {
+                inherit permittedInsecurePackages;
                 allowUnfreePredicate = import ./unfree.nix self.lib;
               };
             };

@@ -12,8 +12,6 @@
       hyprshot
       kdePackages.filelight
       thunderbird
-      bitwarden-desktop
-      bitwarden-menu
       blender
       texliveMedium
       findutils.locate
@@ -54,7 +52,10 @@
       telegram-desktop
       obsidian
       android-studio
+      android-tools
       nixd
       qt6.qtdeclarative
+      bitwarden-desktop
+      bitwarden-menu
     ]);
 }
