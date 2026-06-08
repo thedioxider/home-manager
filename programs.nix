@@ -25,6 +25,7 @@
     #   package = pkgs.unstable.claude-code;
     # };
     opencode.enable = true;
+    codex.enable = true;
     distrobox.enable = true;
   };
 }
