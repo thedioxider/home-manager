@@ -574,7 +574,7 @@ PanelWindow {
                 id: power2
                 icon: ""
                 label: "Power Off"
-                onClick: Quickshell.execDetached(["hyprshutdown", "--post-cmd", "'poweroff'"])
+                onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"hyprshutdown --post-cmd 'systemctl poweroff'\")")
                 KeyNavigation.left: power1
                 KeyNavigation.right: power3
             }
@@ -582,7 +582,7 @@ PanelWindow {
                 id: power3
                 icon: ""
                 label: "Reboot"
-                onClick: Quickshell.execDetached(["hyprshutdown", "--post-cmd", "'reboot'"])
+                onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"hyprshutdown --post-cmd 'systemctl reboot'\")")
                 KeyNavigation.left: power2
                 KeyNavigation.right: power1
             }
