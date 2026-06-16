@@ -47,6 +47,7 @@
       chromium
       qdirstat
       deno
+      qbittorrent
     ])
     ++ (with pkgs; [
       telegram-desktop
