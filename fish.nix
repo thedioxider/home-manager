@@ -3,8 +3,7 @@
   home.shell.enableFishIntegration = true;
   programs.fish = {
     enable = true;
-    package = pkgs.fish;
-
+    package = pkgs.stable.fish;
 
     shellInit = ''
       fish_config theme choose "Old School"
