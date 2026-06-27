@@ -28,7 +28,7 @@
     let
       system = "x86_64-linux";
       allowUnfreePredicate = import ./unfree.nix nixpkgs.lib;
-      permittedInsecurePackages = [ ];
+      permittedInsecurePackages = [ "electron-39.8.10" ];
       pkgs = import nixpkgs {
         inherit system;
         config = {
