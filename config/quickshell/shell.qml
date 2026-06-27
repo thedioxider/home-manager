@@ -1,10 +1,13 @@
 //@ pragma UseQApplication
 
 import Quickshell
+import Quickshell.Io
+import Quickshell.Hyprland
 import QtQuick
 import qs.config
 import qs.modules
 import qs.modules.bar
+import qs.state
 
 ShellRoot {
     Variants {
@@ -41,6 +44,21 @@ ShellRoot {
             required property var modelData
 
             screen: modelData
+        }
+    }
+
+    IpcHandler {
+        target: "power-menu"
+
+        function open(): void {
+            var name = Hyprland.focusedMonitor.name;
+            for (var i = 0; i < Quickshell.screens.length; i++) {
+                if (Quickshell.screens[i].name === name) {
+                    PowerMenuState.open(Quickshell.screens[i]);
+                    return;
+                }
+            }
+            PowerMenuState.open(Quickshell.screens[0]);
         }
     }
 }

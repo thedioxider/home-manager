@@ -29,6 +29,7 @@ local function dsp_by_layout(cases)
 	end
 end
 
+hl.bind("XF86PowerOff", hl.dsp.exec_cmd("qs ipc call power-menu open"))
 hl.bind(MAIN_MOD .. "+T", hl.dsp.exec_cmd(programs.terminal))
 hl.bind(MAIN_MOD .. "+C", hl.dsp.window.close())
 hl.bind(MAIN_MOD .. "+ALT+BackSpace", hl.dsp.exec_cmd("hyprshutdown --post-cmd 'hyprctl dispatch \"hl.dsp.exit()\"'"))
