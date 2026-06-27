@@ -1,3 +1,9 @@
+-- No rounding for floating windows; tiled windows keep global rounding
+hl.window_rule({
+	match = { float = true },
+	rounding = 0,
+})
+
 -- Picture-in-Picture
 hl.window_rule({
 	match = { title = "^Picture-in-Picture$" },
