@@ -94,7 +94,10 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: "black"
-        opacity: 0.45
+        opacity: PowerMenuState.activeScreen !== null ? 0.45 : 0
+        Behavior on opacity {
+            NumberAnimation { duration: 120; easing: Easing.OutCubic }
+        }
     }
 
     RowLayout {
@@ -102,6 +105,10 @@ PanelWindow {
         spacing: 60
         height: 300
         visible: PowerMenuState.activeScreen === root.screen
+        opacity: PowerMenuState.activeScreen === root.screen ? 1 : 0
+        scale: PowerMenuState.activeScreen === root.screen ? 1 : 0.93
+        Behavior on opacity { NumberAnimation { duration: 160; easing: Easing.OutCubic } }
+        Behavior on scale { NumberAnimation { duration: 160; easing: Easing.OutCubic } }
 
         PowerButton {
             id: power1
