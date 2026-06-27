@@ -478,8 +478,6 @@ PanelWindow {
 
         signal click
 
-        focus: hover.hovered
-
         Layout.fillHeight: true
         Layout.fillWidth: true
         border {
@@ -490,7 +488,12 @@ PanelWindow {
         radius: 48
         implicitWidth: height
 
+        Keys.onReturnPressed: { powerMenuScreen.visible = false; powerButton.click(); }
+        Keys.onSpacePressed: { powerMenuScreen.visible = false; powerButton.click(); }
+        Keys.onEscapePressed: powerMenuScreen.visible = false
+
         Item {
+            anchors.fill: parent
             Rectangle {
                 anchors.fill: parent
                 color: Theme.palette.background
@@ -518,7 +521,7 @@ PanelWindow {
             Rectangle {
                 anchors.fill: parent
                 color: Theme.palette.surface
-                opacity: powerButton.focus ? 0.2 : 0
+                opacity: powerButton.activeFocus ? 0.2 : 0
                 Behavior on opacity {
                     NumberAnimation {
                         duration: 200
@@ -529,6 +532,7 @@ PanelWindow {
         }
         HoverHandler {
             id: hover
+            onHoveredChanged: if (hovered) powerButton.forceActiveFocus()
         }
         TapHandler {
             onTapped: {
@@ -556,6 +560,14 @@ PanelWindow {
 
         color: "transparent"
         exclusionMode: ExclusionMode.Ignore
+
+        onVisibleChanged: if (visible) power1.forceActiveFocus()
+
+        Rectangle {
+            anchors.fill: parent
+            color: "black"
+            opacity: 0.45
+        }
 
         RowLayout {
             anchors.centerIn: parent
@@ -590,7 +602,5 @@ PanelWindow {
         TapHandler {
             onTapped: powerMenuScreen.visible = false
         }
-        KeyNavigation.left: power3
-        KeyNavigation.right: power1
     }
 }
