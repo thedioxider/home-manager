@@ -30,7 +30,7 @@ hl.layer_rule({
 	ignore_alpha = 0.2,
 })
 hl.layer_rule({
-	match = { namespace = "status-bar-power" },
+	match = { namespace = "power-menu" },
 	blur = true,
 	ignore_alpha = 0.2,
 })

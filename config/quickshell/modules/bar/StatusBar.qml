@@ -13,6 +13,7 @@ import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 import qs.config
+import qs.state
 import qs.widgets
 import qs.widgets.util
 
@@ -205,7 +206,7 @@ PanelWindow {
                     id: workspaceItem
                     required property HyprlandWorkspace modelData
                     glyph: StatusGlyphItem {
-                        text: ""
+                        text: "\uf362"
                         font.family: Theme.fonts.text
                         font.bold: true
                         font.pixelSize: statusBar.barWidth / 2
@@ -325,7 +326,7 @@ PanelWindow {
                         return null;
                     }
                     glyph: StatusGlyphItem {
-                        text: netItem._net ? "󰤨" : "󰤭"
+                        text: netItem._net ? "\u{f0928}" : "\u{f092d}"
                     }
                     content: StatusTextItem {
                         text: netItem._net ? netItem._net.name : "Disconnected"
@@ -341,7 +342,7 @@ PanelWindow {
                         return null;
                     }
                     glyph: StatusGlyphItem {
-                        text: btItem._btOn ? (btItem._connectedDev ? "󰂱" : "󰂯") : "󰂲"
+                        text: btItem._btOn ? (btItem._connectedDev ? "\u{f00b1}" : "\u{f00af}") : "\u{f00b2}"
                     }
                     content: StatusTextItem {
                         text: btItem._btOn ? (btItem._connectedDev ? (btItem._connectedDev.batteryAvailable ? "[" + Math.round(btItem._connectedDev.battery * 100) + "%] " : "") + btItem._connectedDev.name : "On") : "Off"
@@ -393,7 +394,7 @@ PanelWindow {
                     readonly property bool _muted: _sink && _sink.audio ? _sink.audio.muted : false
                     readonly property int _vol: _sink && _sink.audio ? Math.round(_sink.audio.volume * 100) : 0
                     glyph: StatusGlyphItem {
-                        text: volItem._muted ? "󰝟" : volItem._vol > 66 ? "󰕾" : volItem._vol > 0 ? "󰖀" : "󰕿"
+                        text: volItem._muted ? "\u{f075f}" : volItem._vol > 66 ? "\u{f057e}" : volItem._vol > 0 ? "\u{f0580}" : "\u{f057f}"
                     }
                     content: StatusTextItem {
                         text: volItem._muted ? "Muted" : volItem._vol + "%"
@@ -407,7 +408,7 @@ PanelWindow {
                     readonly property bool _charging: _ready && (_bat.state === UPowerDeviceState.Charging || _bat.state === UPowerDeviceState.FullyCharged)
                     readonly property int _pct: _ready ? Math.round(_bat.percentage * 100) : 0
                     glyph: StatusGlyphItem {
-                        text: !batItem._ready ? "󰂑" : batItem._charging ? "󰂄" : batItem._pct > 90 ? "󰁹" : batItem._pct > 80 ? "󰂂" : batItem._pct > 70 ? "󰂁" : batItem._pct > 60 ? "󰂀" : batItem._pct > 50 ? "󰁿" : batItem._pct > 40 ? "󰁾" : batItem._pct > 30 ? "󰁽" : batItem._pct > 20 ? "󰁼" : batItem._pct > 10 ? "󰁻" : "󰁺"
+                        text: !batItem._ready ? "\u{f0091}" : batItem._charging ? "\u{f0084}" : batItem._pct > 90 ? "\u{f0079}" : batItem._pct > 80 ? "\u{f0082}" : batItem._pct > 70 ? "\u{f0081}" : batItem._pct > 60 ? "\u{f0080}" : batItem._pct > 50 ? "\u{f007f}" : batItem._pct > 40 ? "\u{f007e}" : batItem._pct > 30 ? "\u{f007d}" : batItem._pct > 20 ? "\u{f007c}" : batItem._pct > 10 ? "\u{f007b}" : "\u{f007a}"
                     }
                     content: StatusTextItem {
                         text: batItem._ready ? batItem._pct + "%" : "N/A"
@@ -423,11 +424,11 @@ PanelWindow {
             radius: width / 2
             color: Theme.palette.backgroundAlt
             rippleColor: Theme.palette.surface
-            onClicked: powerMenuScreen.visible = !powerMenuScreen.visible
+            onClicked: PowerMenuState.open(statusBar.screen)
 
             StatusGlyphItem {
                 anchors.centerIn: parent
-                text: ""
+                text: "\uf313"
                 color: Theme.palette.onBackground
             }
         }
@@ -471,136 +472,4 @@ PanelWindow {
         mask: Region {}
     }
 
-    component PowerButton: ClippingWrapperRectangle {
-        id: powerButton
-        required property string icon
-        required property string label
-
-        signal click
-
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        border {
-            color: Theme.palette.surface
-            width: 4
-        }
-        color: "transparent"
-        radius: 48
-        implicitWidth: height
-
-        Keys.onReturnPressed: { powerMenuScreen.visible = false; powerButton.click(); }
-        Keys.onSpacePressed: { powerMenuScreen.visible = false; powerButton.click(); }
-        Keys.onEscapePressed: powerMenuScreen.visible = false
-
-        Item {
-            anchors.fill: parent
-            Rectangle {
-                anchors.fill: parent
-                color: Theme.palette.background
-                opacity: 0.5
-            }
-
-            Column {
-                spacing: 16
-                anchors.centerIn: parent
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: powerButton.icon
-                    font.family: Theme.fonts.symbols
-                    font.pixelSize: powerButton.height / 3
-                    color: Theme.palette.onBackground
-                }
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: powerButton.label
-                    font.family: Theme.fonts.text
-                    font.pixelSize: 36
-                    color: Theme.palette.onBackground
-                }
-            }
-            Rectangle {
-                anchors.fill: parent
-                color: Theme.palette.surface
-                opacity: powerButton.activeFocus ? 0.2 : 0
-                Behavior on opacity {
-                    NumberAnimation {
-                        duration: 200
-                        easing: Easing.OutCubic
-                    }
-                }
-            }
-        }
-        HoverHandler {
-            id: hover
-            onHoveredChanged: if (hovered) powerButton.forceActiveFocus()
-        }
-        TapHandler {
-            onTapped: {
-                powerMenuScreen.visible = false;
-                powerButton.click();
-            }
-        }
-    }
-
-    PanelWindow {
-        id: powerMenuScreen
-        screen: statusBar.screen
-        visible: false
-        focusable: true
-
-        WlrLayershell.layer: WlrLayer.Overlay
-        WlrLayershell.namespace: "status-bar-power"
-
-        anchors {
-            left: true
-            top: true
-            right: true
-            bottom: true
-        }
-
-        color: "transparent"
-        exclusionMode: ExclusionMode.Ignore
-
-        onVisibleChanged: if (visible) power1.forceActiveFocus()
-
-        Rectangle {
-            anchors.fill: parent
-            color: "black"
-            opacity: 0.45
-        }
-
-        RowLayout {
-            anchors.centerIn: parent
-            spacing: 60
-            height: 300
-
-            PowerButton {
-                id: power1
-                icon: ""
-                label: "Lock"
-                onClick: Quickshell.execDetached(["loginctl", "lock-session"])
-                KeyNavigation.left: power3
-                KeyNavigation.right: power2
-            }
-            PowerButton {
-                id: power2
-                icon: ""
-                label: "Power Off"
-                onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"hyprshutdown --post-cmd 'systemctl poweroff'\")")
-                KeyNavigation.left: power1
-                KeyNavigation.right: power3
-            }
-            PowerButton {
-                id: power3
-                icon: ""
-                label: "Reboot"
-                onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"hyprshutdown --post-cmd 'systemctl reboot'\")")
-                KeyNavigation.left: power2
-                KeyNavigation.right: power1
-            }
-        }
-        TapHandler {
-            onTapped: powerMenuScreen.visible = false
-        }
-    }
 }

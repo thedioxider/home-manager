@@ -33,4 +33,14 @@ ShellRoot {
             screen: modelData
         }
     }
+
+    Variants {
+        model: Quickshell.screens
+
+        PowerMenu {
+            required property var modelData
+
+            screen: modelData
+        }
+    }
 }
