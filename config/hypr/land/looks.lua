@@ -1,6 +1,6 @@
 hl.config({
 	cursor = {
-		no_hardware_cursors = true,
+		use_cpu_buffer = true,
 		-- no_warps = true,
 	},
 
