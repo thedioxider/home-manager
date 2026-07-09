@@ -58,5 +58,6 @@
       qt6.qtdeclarative
       bitwarden-desktop
       bitwarden-menu
+      nicotine-plus
     ]);
 }
