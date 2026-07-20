@@ -24,7 +24,6 @@
       vlc
       rpi-imager
       nmap
-      aseprite
       scooter
       picocom
       rshell
