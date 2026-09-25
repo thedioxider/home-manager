@@ -6,6 +6,7 @@
       packages = [
         "app.zen_browser.zen"
         "org.onlyoffice.desktopeditors"
+        "dev.geopjr.Turntable"
       ];
       update.auto = {
         enable = true;
@@ -22,6 +23,8 @@
     #   acceleration = "cuda";
     # };
   };
+
+  services.gnome-keyring.enable = true;
 
   services.rescrobbled.enable = true;
   systemd.user.services.rescrobbled.Install.WantedBy = lib.mkForce [ ];

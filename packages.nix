@@ -51,6 +51,7 @@
     ++ (with pkgs; [
       telegram-desktop
       obsidian
+      krita
       android-studio
       android-tools
       nixd
