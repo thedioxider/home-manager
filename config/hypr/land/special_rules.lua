@@ -22,10 +22,24 @@ hl.window_rule({
 	size = { 360, 640 },
 })
 
+-- Happ
+hl.window_rule({
+        match = { class = "^Happ$" },
+        float = true,
+        persistent_size = true,
+})
+
 -- Telegram
 hl.window_rule({
 	match = { class = "^org.telegram.desktop$" },
 	float = true,
 	pseudo = true,
+	persistent_size = true,
+})
+
+-- Turntable
+hl.window_rule({
+	match = { class = "^dev.geopjr.Turntable" },
+	float = true,
 	persistent_size = true,
 })
