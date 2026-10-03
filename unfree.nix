@@ -16,5 +16,7 @@ lib: pkg:
   "libnvjitlink"
   "libnpp"
   "cudnn"
+  "discord"
+  "discord-unwrapped"
 ])
 || (builtins.match "^(cuda_[a-z_]+)|(libcu[a-z]+)$" (lib.getName pkg)) != null

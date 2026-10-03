@@ -27,5 +27,6 @@
     opencode.enable = true;
     codex.enable = true;
     distrobox.enable = true;
+    discord.enable = true;
   };
 }
