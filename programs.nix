@@ -26,7 +26,11 @@
     # };
     opencode.enable = true;
     codex.enable = true;
-    distrobox.enable = true;
+    distrobox = {
+      enable = true;
+      # distrobox-enter drops host vars starting with `_`; valueless --env forwards the host value
+      settings.container_manager_additional_flags = "--env=_JAVA_AWT_WM_NONREPARENTING";
+    };
     discord.enable = true;
   };
 }
