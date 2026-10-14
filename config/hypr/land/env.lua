@@ -1,6 +1,9 @@
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 
+-- Java/AWT apps (Vivado, IDEA) paint blank windows on non-reparenting compositors
+hl.env("_JAVA_AWT_WM_NONREPARENTING", "1")
+
 -- compositor GPU selection: set AQ_DRM_DEVICES from aq-gpu's alias-based value.
 -- If the util fails, AQ_DRM_DEVICES stays unset and Aquamarine auto-picks the
 -- iGPU (it favours the built-in panel's GPU). (see aq-gpu.nix)
