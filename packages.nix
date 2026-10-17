@@ -1,63 +1,69 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 {
   # nixpkgs.config.cudaSupport = true;
 
-  home.packages =
-    (with pkgs.stable; [
-      python3
-      kitty
-      trash-cli
-      playerctl
-      wl-clipboard
-      hyprshot
-      kdePackages.filelight
-      thunderbird
-      blender
-      texliveMedium
-      findutils.locate
-      bluez
-      blueman
-      arduino-ide
-      obs-studio
-      adwaita-icon-theme
-      inkscape
-      vlc
-      rpi-imager
-      nmap
-      scooter
-      picocom
-      rshell
-      jetbrains.idea-oss
-      bc
-      xxd
-      hexedit
-      marktext
-      gtk3
-      gsettings-desktop-schemas
-      libnotify
-      kdePackages.gwenview
-      fd
-      fzf
-      ripgrep
-      lazygit
-      gdu
-      bottom
-      gh
-      chromium
-      qdirstat
-      deno
-      qbittorrent
-    ])
-    ++ (with pkgs; [
-      telegram-desktop
-      obsidian
-      krita
-      android-studio
-      android-tools
-      nixd
-      qt6.qtdeclarative
-      bitwarden-desktop
-      bitwarden-menu
-      nicotine-plus
-    ]);
+  home.packages = [
+    inputs.claude-desktop.packages.${pkgs.stdenv.hostPlatform.system}.claude-desktop-fhs
+  ]
+  ++ (with pkgs.stable; [
+    python3
+    kitty
+    trash-cli
+    playerctl
+    wl-clipboard
+    hyprshot
+    kdePackages.filelight
+    thunderbird
+    blender
+    texliveMedium
+    findutils.locate
+    bluez
+    blueman
+    arduino-ide
+    obs-studio
+    adwaita-icon-theme
+    inkscape
+    vlc
+    rpi-imager
+    nmap
+    scooter
+    picocom
+    rshell
+    jetbrains.idea-oss
+    bc
+    xxd
+    hexedit
+    marktext
+    gtk3
+    gsettings-desktop-schemas
+    libnotify
+    kdePackages.gwenview
+    fd
+    fzf
+    ripgrep
+    lazygit
+    gdu
+    bottom
+    gh
+    chromium
+    qdirstat
+    deno
+    qbittorrent
+  ])
+  ++ (with pkgs; [
+    telegram-desktop
+    obsidian
+    krita
+    android-studio
+    android-tools
+    nixd
+    qt6.qtdeclarative
+    bitwarden-desktop
+    bitwarden-menu
+    nicotine-plus
+  ]);
 }

@@ -15,6 +15,10 @@
       url = "github:Duckonaut/split-monitor-workspaces/v0.55.2";
       inputs.hyprland.follows = "hyprland";
     };
+    claude-desktop = {
+      url = "github:aaddrick/claude-desktop-debian";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
