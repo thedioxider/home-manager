@@ -19,7 +19,7 @@
     kdePackages.filelight
     thunderbird
     blender
-    texliveMedium
+    texliveFull
     findutils.locate
     bluez
     blueman
