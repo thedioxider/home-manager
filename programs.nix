@@ -32,5 +32,6 @@
       settings.container_manager_additional_flags = "--env=_JAVA_AWT_WM_NONREPARENTING";
     };
     discord.enable = true;
+    lutris.enable = true;
   };
 }
