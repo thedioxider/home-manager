@@ -51,10 +51,64 @@ hl.bind(MAIN_MOD .. "+ALT+H", hl.dsp.focus({ monitor = "l" }))
 hl.bind(MAIN_MOD .. "+ALT+L", hl.dsp.focus({ monitor = "r" }))
 hl.bind(MAIN_MOD .. "+ALT+K", hl.dsp.focus({ monitor = "u" }))
 hl.bind(MAIN_MOD .. "+ALT+J", hl.dsp.focus({ monitor = "d" }))
+local function cur_and_next_monitor()
+	local mons = hl.get_monitors()
+	local cur = hl.get_active_monitor()
+	if not cur or #mons < 2 then
+		return nil
+	end
+	for i, m in ipairs(mons) do
+		if m.id == cur.id then
+			return cur, mons[i % #mons + 1]
+		end
+	end
+end
+
+local function swap_workspace_windows(a, b)
+	local wa = hl.get_workspace_windows(a)
+	local wb = hl.get_workspace_windows(b)
+	for _, w in ipairs(wa) do
+		hl.dispatch(hl.dsp.window.move({ workspace = tostring(b), follow = false, window = w }))
+	end
+	for _, w in ipairs(wb) do
+		hl.dispatch(hl.dsp.window.move({ workspace = tostring(a), follow = false, window = w }))
+	end
+end
+
+-- Swap windows of the active workspaces (SHIFT) or of all same-numbered
+-- workspaces (ALT) between the current and the next monitor
+local function swap_with_next_monitor(all)
+	local cur, nxt = cur_and_next_monitor()
+	local a = cur and cur.active_workspace
+	local b = nxt and nxt.active_workspace
+	if not a or not b or a.id < 1 or b.id < 1 then
+		return
+	end
+	local active = hl.get_active_window()
+	if all then
+		local count = hl.get_config("plugin:split_monitor_workspaces:count")
+		local base_a = math.floor((a.id - 1) / count) * count
+		local base_b = math.floor((b.id - 1) / count) * count
+		for i = 1, count do
+			swap_workspace_windows(base_a + i, base_b + i)
+		end
+	else
+		swap_workspace_windows(a.id, b.id)
+	end
+	if active then
+		hl.dispatch(hl.dsp.focus({ window = active }))
+	end
+end
+
 hl.bind(MAIN_MOD .. "+A", function()
 	smw.change_monitor("+1")
 end)
-hl.bind(MAIN_MOD .. "+SHIFT+A", hl.dsp.window.move({ monitor = "+1" }))
+hl.bind(MAIN_MOD .. "+SHIFT+A", function()
+	swap_with_next_monitor(false)
+end)
+hl.bind(MAIN_MOD .. "+ALT+A", function()
+	swap_with_next_monitor(true)
+end)
 
 hl.layer_rule({ match = { namespace = "selection" }, no_anim = true })
 hl.bind("Print", function()
