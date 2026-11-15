@@ -28,15 +28,46 @@ hl.config({
 })
 
 ---- Setup all existing workspaces
+local SMW_COUNT = 6
 hl.config({
 	plugin = {
 		split_monitor_workspaces = {
-			count = 6,
+			count = SMW_COUNT,
 			keep_focused = true,
 			enable_persistent_workspaces = true,
 		},
 	},
 })
+
+-- On disconnect, move windows from the removed monitor's Nth workspace
+-- to the focused monitor's Nth workspace
+local function smw_block(id)
+	return math.floor((id - 1) / SMW_COUNT)
+end
+
+hl.on("monitor.removed", function()
+	-- Hyprland has already migrated the removed monitor's workspaces here,
+	-- so any window outside a connected monitor's block is orphaned
+	local owned = {}
+	for _, m in ipairs(hl.get_monitors()) do
+		local a = m.active_workspace
+		if a and a.id > 0 then
+			owned[smw_block(a.id)] = true
+		end
+	end
+	local target = hl.get_active_workspace()
+	if not target or target.id < 1 then
+		return
+	end
+	local base = smw_block(target.id) * SMW_COUNT
+	for _, w in ipairs(hl.get_windows()) do
+		local id = w.workspace and w.workspace.id
+		if id and id > 0 and not owned[smw_block(id)] then
+			local dest = base + (id - 1) % SMW_COUNT + 1
+			hl.dispatch(hl.dsp.window.move({ workspace = tostring(dest), follow = false, window = w }))
+		end
+	end
+end)
 
 -- Ignore maximize requests from apps. You'll probably like this.
 hl.window_rule({
