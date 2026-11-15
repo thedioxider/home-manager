@@ -2,6 +2,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl restart --user quickshell.service")
 	hl.exec_cmd("waypaper --restore")
 	hl.exec_cmd("xhost +si:localuser:root")
+	hl.exec_cmd("hyprmoncfgd")
 end)
 
 hl.on("hyprland.shutdown", function()

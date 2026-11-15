@@ -16,6 +16,8 @@ in
 
     configType = "lua";
     extraConfig = ''
+      require("monitors")
+
       hl.plugin.load("${
         inputs.hyprland-split-monitor-workspaces.packages.${pkgs.stdenv.hostPlatform.system}.default
       }/lib/libsplit-monitor-workspaces.so")

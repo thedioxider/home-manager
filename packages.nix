@@ -65,5 +65,6 @@
     bitwarden-desktop
     bitwarden-menu
     nicotine-plus
+    hyprmoncfg
   ]);
 }
