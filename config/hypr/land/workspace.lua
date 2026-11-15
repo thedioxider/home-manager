@@ -69,6 +69,43 @@ hl.on("monitor.removed", function()
 	end
 end)
 
+-- Reset a workspace back to the default layout once it has one or less windows
+local window_ws = {}
+for _, w in ipairs(hl.get_windows()) do
+	if w.workspace then
+		window_ws[w.address] = w.workspace.id
+	end
+end
+
+local function reset_ws_layout(id)
+	if not id or id < 1 then
+		return
+	end
+	hl.timer(function()
+		local ws = hl.get_workspace(id)
+		local default = hl.get_config("general:layout")
+		if ws and ws.windows <= 1 and ws.tiled_layout ~= default then
+			hl.workspace_rule({ workspace = tostring(id), layout = default })
+		end
+	end, { timeout = 50, type = "oneshot" })
+end
+
+hl.on("window.open", function(w)
+	if w.workspace then
+		window_ws[w.address] = w.workspace.id
+	end
+end)
+hl.on("window.move_to_workspace", function(w, ws)
+	local from = window_ws[w.address]
+	window_ws[w.address] = ws and ws.id
+	reset_ws_layout(from)
+end)
+hl.on("window.close", function(w)
+	local from = w.workspace and w.workspace.id or window_ws[w.address]
+	window_ws[w.address] = nil
+	reset_ws_layout(from)
+end)
+
 -- Ignore maximize requests from apps. You'll probably like this.
 hl.window_rule({
 	match = { class = ".*" },
