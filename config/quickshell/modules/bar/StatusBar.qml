@@ -416,6 +416,22 @@ PanelWindow {
             }
         }
 
+        RippleButton {
+            Layout.fillWidth: true
+            Layout.margins: statusBar.itemMargins
+            implicitHeight: width
+            radius: width / 2
+            color: Theme.palette.backgroundAlt
+            rippleColor: Theme.palette.surface
+            onClicked: () => Quickshell.execDetached(["kitty", "hyprmoncfg"])
+
+            StatusGlyphItem {
+                anchors.centerIn: parent
+                text: "\udb80\udf79"
+                color: Theme.palette.onBackground
+            }
+        }
+
         StatusCapsule {
             id: keyboardLayoutWidget
             Layout.fillWidth: true
