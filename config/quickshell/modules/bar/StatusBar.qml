@@ -54,9 +54,6 @@ PanelWindow {
         Region {
             item: connectivityList.hoverArea
         }
-        Region {
-            item: levelList.hoverArea
-        }
     }
 
     component StatusGlyphItem: Text {
@@ -302,63 +299,28 @@ PanelWindow {
                     content: StatusTextItem {
                         text: netItem._net ? netItem._net.name : "Disconnected"
                     }
+                    action: () => Quickshell.execDetached(["kitty", "nmtui"])
                 },
                 StatusCapsuleItem {
                     id: btItem
                     readonly property bool _btOn: Bluetooth.defaultAdapter ? Bluetooth.defaultAdapter.enabled : false
-                    readonly property var _connectedDev: {
-                        let dev = (Bluetooth.devices ? Bluetooth.devices.values : []).find(dev => dev.connected);
-                        if (dev)
-                            return dev;
-                        return null;
+                    readonly property var _connectedDevList: (Bluetooth.devices ? Bluetooth.devices.values : []).filter(dev => dev.connected)
+                    property int _devIdx: 0
+                    property Timer _devIdxCycle: Timer {
+                        interval: 15000
+                        repeat: true
+                        running: btItem._btOn && btItem._connectedDevList.length > 1
+                        onTriggered: btItem._devIdx = (btItem._devIdx + 1) % btItem._connectedDevList.length
                     }
+                    readonly property var _connectedDev: _connectedDevList.length > 0 ? _connectedDevList[_devIdx % _connectedDevList.length] : null
                     glyph: StatusGlyphItem {
                         text: btItem._btOn ? (btItem._connectedDev ? "\u{f00b1}" : "\u{f00af}") : "\u{f00b2}"
                     }
                     content: StatusTextItem {
                         text: btItem._btOn ? (btItem._connectedDev ? (btItem._connectedDev.batteryAvailable ? "[" + Math.round(btItem._connectedDev.battery * 100) + "%] " : "") + btItem._connectedDev.name : "On") : "Off"
                     }
-                }
-            ]
-        }
-
-        StatusCapsule {
-            id: keyboardLayoutWidget
-            Layout.fillWidth: true
-            Layout.margins: statusBar.itemMargins
-            frame: statusBar.capsuleFrame
-            barEdge: statusBar.barWidth - x
-            pointer: null
-            drawerOpen: false
-
-            entries: [
-                StatusCapsuleItem {
-                    glyph: StatusGlyphItem {
-                        text: keyboardLayout.shortName
-                        font.family: Theme.fonts.text
-                        font.pixelSize: statusBar.barWidth
-                        fontSizeMode: Text.Fit
-                        width: keyboardLayoutWidget.width - 2 * statusBar.itemMargins
-                        height: keyboardLayoutWidget.width - 2 * statusBar.itemMargins
-                        horizontalAlignment: Text.AlignHCenter
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    content: StatusTextItem {
-                        text: ""
-                    }
-                }
-            ]
-        }
-
-        StatusCapsule {
-            id: levelList
-            Layout.fillWidth: true
-            Layout.margins: statusBar.itemMargins
-            frame: statusBar.capsuleFrame
-            barEdge: statusBar.barWidth - x
-            pointer: levelListProxy
-
-            entries: [
+                    action: () => Quickshell.execDetached(["blueman-manager"])
+                },
                 StatusCapsuleItem {
                     id: volItem
                     readonly property var _sink: Pipewire.defaultAudioSink
@@ -415,6 +377,10 @@ PanelWindow {
         width: statusBar.barWidth
         spacing: 0
 
+        Item {
+            Layout.fillHeight: true
+        }
+
         StatusCapsule {
             id: trayWidget
             Layout.fillWidth: true
@@ -423,7 +389,6 @@ PanelWindow {
             edge: Qt.RightEdge
             barEdge: statusBar.barWidth - x
             pointer: trayWidgetProxy
-            Layout.alignment: Qt.AlignBottom
 
             Instantiator {
                 id: trayItems
@@ -449,6 +414,34 @@ PanelWindow {
                     arr.push(trayItems.objectAt(i));
                 return arr;
             }
+        }
+
+        StatusCapsule {
+            id: keyboardLayoutWidget
+            Layout.fillWidth: true
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
+            barEdge: statusBar.barWidth - x
+            pointer: null
+            drawerOpen: false
+
+            entries: [
+                StatusCapsuleItem {
+                    glyph: StatusGlyphItem {
+                        text: keyboardLayout.shortName
+                        font.family: Theme.fonts.text
+                        font.pixelSize: statusBar.barWidth
+                        fontSizeMode: Text.Fit
+                        width: keyboardLayoutWidget.width - 2 * statusBar.itemMargins
+                        height: keyboardLayoutWidget.width - 2 * statusBar.itemMargins
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    content: StatusTextItem {
+                        text: ""
+                    }
+                }
+            ]
         }
     }
 
