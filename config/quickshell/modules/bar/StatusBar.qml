@@ -39,7 +39,12 @@ PanelWindow {
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
     mask: Region {
-        item: barContent
+        Region {
+            item: functionalBarContent
+        }
+        Region {
+            item: supportBarContent
+        }
         Region {
             item: workspacesWidget.hoverArea
         }
@@ -165,7 +170,7 @@ PanelWindow {
     }
 
     ColumnLayout {
-        id: barContent
+        id: functionalBarContent
         anchors {
             left: parent.left
             top: parent.top
@@ -268,40 +273,6 @@ PanelWindow {
                     padding: windowTitle.radius
                     gap: windowTitle.radius + 16
                 }
-            }
-        }
-
-        StatusCapsule {
-            id: trayWidget
-            Layout.fillWidth: true
-            Layout.margins: statusBar.itemMargins
-            frame: statusBar.capsuleFrame
-            barEdge: statusBar.barWidth - x
-            pointer: trayWidgetProxy
-
-            Instantiator {
-                id: trayItems
-                model: SystemTray.items
-                delegate: StatusCapsuleItem {
-                    id: trayItem
-                    required property SystemTrayItem modelData
-                    glyph: IconImage {
-                        source: trayItem.modelData.icon
-                        implicitSize: trayWidget.width - 2 * statusBar.itemMargins
-                    }
-                    content: StatusTextItem {
-                        text: trayItem.modelData.title
-                    }
-                    action: () => trayItem.modelData.activate()
-                    secondaryAction: pos => trayItem.modelData.display(statusBar, pos.x, pos.y)
-                    tertiaryAction: () => trayItem.modelData.secondaryActivate()
-                }
-            }
-            entries: {
-                let arr = [];
-                for (let i = 0; i < trayItems.count; ++i)
-                    arr.push(trayItems.objectAt(i));
-                return arr;
             }
         }
 
@@ -434,6 +405,53 @@ PanelWindow {
         }
     }
 
+    ColumnLayout {
+        id: supportBarContent
+        anchors {
+            right: parent.right
+            top: parent.top
+            bottom: parent.bottom
+        }
+        width: statusBar.barWidth
+        spacing: 0
+
+        StatusCapsule {
+            id: trayWidget
+            Layout.fillWidth: true
+            Layout.margins: statusBar.itemMargins
+            frame: statusBar.capsuleFrame
+            edge: Qt.RightEdge
+            barEdge: statusBar.barWidth - x
+            pointer: trayWidgetProxy
+            Layout.alignment: Qt.AlignBottom
+
+            Instantiator {
+                id: trayItems
+                model: SystemTray.items
+                delegate: StatusCapsuleItem {
+                    id: trayItem
+                    required property SystemTrayItem modelData
+                    glyph: IconImage {
+                        source: trayItem.modelData.icon
+                        implicitSize: trayWidget.width - 2 * statusBar.itemMargins
+                    }
+                    content: StatusTextItem {
+                        text: trayItem.modelData.title
+                    }
+                    action: () => trayItem.modelData.activate()
+                    secondaryAction: pos => trayItem.modelData.display(statusBar, pos.x, pos.y)
+                    tertiaryAction: () => trayItem.modelData.secondaryActivate()
+                }
+            }
+            entries: {
+                let arr = [];
+                for (let i = 0; i < trayItems.count; ++i)
+                    arr.push(trayItems.objectAt(i));
+                return arr;
+            }
+        }
+    }
+
     // Pointer proxies, aren't cropped by parents
     PointerProxy {
         id: workspacesWidgetProxy
@@ -452,7 +470,7 @@ PanelWindow {
         target: levelList.hoverArea
     }
 
-    // Separate exclusion zone, since the bar's window is full-screen
+    // Separate exclusion zones, since the bar's window is full-screen
     PanelWindow {
         screen: statusBar.screen
 
@@ -472,4 +490,22 @@ PanelWindow {
         mask: Region {}
     }
 
+    PanelWindow {
+        screen: statusBar.screen
+
+        WlrLayershell.layer: WlrLayer.Top
+        WlrLayershell.namespace: "status-bar-exclusion"
+
+        anchors {
+            right: true
+            top: true
+            bottom: true
+        }
+
+        implicitWidth: 1
+        color: "transparent"
+        exclusionMode: ExclusionMode.Normal
+        exclusiveZone: statusBar.barWidth
+        mask: Region {}
+    }
 }

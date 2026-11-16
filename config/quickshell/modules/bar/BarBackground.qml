@@ -25,12 +25,11 @@ Shape {
         L 0 ${h}
         Z
         M ${w} 0
-        L ${w - r} 0
-        A ${r} ${r} 0 0 1 ${w} ${r}
-        Z
-        M ${w} ${h}
-        L ${w - r} ${h}
-        A ${r} ${r} 0 0 0 ${w} ${h - r}
+        L ${w - r - bw} 0
+        A ${r} ${r} 0 0 1 ${w - bw} ${r}
+        L ${w - bw} ${h - r}
+        A ${r} ${r} 0 0 1 ${w - bw - r} ${h}
+        L ${w} ${h}
         Z
     `
 

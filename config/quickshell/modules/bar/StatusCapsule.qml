@@ -12,6 +12,8 @@ Item {
     required property list<StatusCapsuleItem> entries
     required property PointerProxy pointer
     readonly property int iconBox: width
+    property int edge: Qt.LeftEdge
+    readonly property bool mirrored: edge === Qt.RightEdge
     property int maxDrawerWidth: iconBox * 6
     property int frame: 4
     property int radius: iconBox / 2
@@ -32,6 +34,8 @@ Item {
     property alias hoverArea: footprint
 
     implicitHeight: iconBox * entries.length
+    LayoutMirroring.enabled: root.mirrored
+    LayoutMirroring.childrenInherit: true
 
     MaxAggregator {
         id: contentWidths
@@ -67,6 +71,10 @@ Item {
 
         visible: protrusion > 0
         preferredRendererType: Shape.CurveRenderer
+        transform: Scale {
+            origin.x: root.iconBox / 2
+            xScale: root.mirrored ? -1 : 1
+        }
 
         ShapePath {
             fillColor: Theme.palette.background
@@ -92,6 +100,7 @@ Item {
 
     ClippingRectangle {
         id: pill
+        anchors.left: parent.left
         width: root.iconBox + root.drawerWidth * root.reveal
         height: root.height
         radius: root.radius
@@ -110,6 +119,9 @@ Item {
                     height: root.iconBox
 
                     Item {
+                        anchors {
+                            left: parent.left
+                        }
                         width: root.iconBox
                         height: root.iconBox
 
@@ -120,18 +132,24 @@ Item {
                     }
 
                     Item {
-                        x: root.iconBox
-                        width: root.drawerWidth
+                        anchors {
+                            left: parent.left
+                            leftMargin: root.iconBox
+                        }
+                        width: Math.min(content.implicitWidth, root.drawerWidth - root.radius)
                         height: root.iconBox
                         visible: root.reveal > 0
                         opacity: root.reveal
 
                         Loader {
                             id: content
-                            anchors.verticalCenter: parent.verticalCenter
-                            anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.rightMargin: root.radius
+                            LayoutMirroring.enabled: false
+                            LayoutMirroring.childrenInherit: true
+                            anchors {
+                                verticalCenter: parent.verticalCenter
+                                left: parent.left
+                                right: parent.right
+                            }
                             height: parent.height
                             sourceComponent: row.modelData.content
                             onImplicitWidthChanged: contentWidths.report(row.index, implicitWidth)
