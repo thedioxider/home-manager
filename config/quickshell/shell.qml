@@ -37,13 +37,17 @@ ShellRoot {
         }
     }
 
-    Variants {
-        model: Quickshell.screens
+    LazyLoader {
+        active: PowerMenuState.activeScreen !== null
 
-        PowerMenu {
-            required property var modelData
+        Variants {
+            model: Quickshell.screens
 
-            screen: modelData
+            PowerMenu {
+                required property var modelData
+
+                screen: modelData
+            }
         }
     }
 

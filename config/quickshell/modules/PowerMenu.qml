@@ -12,8 +12,12 @@ import qs.state
 PanelWindow {
     id: root
 
-    visible: PowerMenuState.activeScreen !== null
-    focusable: PowerMenuState.activeScreen === screen
+    property bool shown: false
+    readonly property bool isActive: shown && PowerMenuState.activeScreen === screen
+
+    Component.onCompleted: shown = true
+
+    focusable: isActive
 
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "power-menu"
@@ -113,7 +117,7 @@ PanelWindow {
     Rectangle {
         anchors.fill: parent
         color: "black"
-        opacity: PowerMenuState.activeScreen !== null ? 0.45 : 0
+        opacity: root.shown ? 0.45 : 0
         Behavior on opacity {
             NumberAnimation {
                 duration: 120
@@ -126,9 +130,9 @@ PanelWindow {
         anchors.centerIn: parent
         spacing: 60
         height: 300
-        visible: PowerMenuState.activeScreen === root.screen
-        opacity: PowerMenuState.activeScreen === root.screen ? 1 : 0
-        scale: PowerMenuState.activeScreen === root.screen ? 1 : 0.93
+        visible: root.isActive
+        opacity: root.isActive ? 1 : 0
+        scale: root.isActive ? 1 : 0.93
         Behavior on opacity {
             NumberAnimation {
                 duration: 160
