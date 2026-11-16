@@ -18,12 +18,18 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "power-menu"
 
-    anchors { left: true; top: true; right: true; bottom: true }
+    anchors {
+        left: true
+        top: true
+        right: true
+        bottom: true
+    }
 
     color: "transparent"
     exclusionMode: ExclusionMode.Ignore
 
-    onFocusableChanged: if (focusable) power1.forceActiveFocus()
+    onFocusableChanged: if (focusable)
+        power1.forceActiveFocus()
 
     component PowerButton: ClippingWrapperRectangle {
         id: powerButton
@@ -40,8 +46,14 @@ PanelWindow {
         border.color: Theme.palette.surface
         border.width: 4
 
-        Keys.onReturnPressed: { PowerMenuState.close(); powerButton.click(); }
-        Keys.onSpacePressed: { PowerMenuState.close(); powerButton.click(); }
+        Keys.onReturnPressed: {
+            PowerMenuState.close();
+            powerButton.click();
+        }
+        Keys.onSpacePressed: {
+            PowerMenuState.close();
+            powerButton.click();
+        }
         Keys.onEscapePressed: PowerMenuState.close()
 
         Item {
@@ -78,16 +90,23 @@ PanelWindow {
                 color: Theme.palette.surface
                 opacity: powerButton.activeFocus ? 0.2 : 0
                 Behavior on opacity {
-                    NumberAnimation { duration: 200; easing: Easing.OutCubic }
+                    NumberAnimation {
+                        duration: 200
+                        easing: Easing.OutCubic
+                    }
                 }
             }
         }
 
         HoverHandler {
-            onHoveredChanged: if (hovered) powerButton.forceActiveFocus()
+            onHoveredChanged: if (hovered)
+                powerButton.forceActiveFocus()
         }
         TapHandler {
-            onTapped: { PowerMenuState.close(); powerButton.click(); }
+            onTapped: {
+                PowerMenuState.close();
+                powerButton.click();
+            }
         }
     }
 
@@ -96,7 +115,10 @@ PanelWindow {
         color: "black"
         opacity: PowerMenuState.activeScreen !== null ? 0.45 : 0
         Behavior on opacity {
-            NumberAnimation { duration: 120; easing: Easing.OutCubic }
+            NumberAnimation {
+                duration: 120
+                easing: Easing.OutCubic
+            }
         }
     }
 
@@ -107,8 +129,18 @@ PanelWindow {
         visible: PowerMenuState.activeScreen === root.screen
         opacity: PowerMenuState.activeScreen === root.screen ? 1 : 0
         scale: PowerMenuState.activeScreen === root.screen ? 1 : 0.93
-        Behavior on opacity { NumberAnimation { duration: 160; easing: Easing.OutCubic } }
-        Behavior on scale { NumberAnimation { duration: 160; easing: Easing.OutCubic } }
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 160
+                easing: Easing.OutCubic
+            }
+        }
+        Behavior on scale {
+            NumberAnimation {
+                duration: 160
+                easing: Easing.OutCubic
+            }
+        }
 
         PowerButton {
             id: power1
@@ -122,7 +154,7 @@ PanelWindow {
             id: power2
             icon: "\uf011"
             label: "Power Off"
-            onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"hyprshutdown --post-cmd 'systemctl poweroff'\")")
+            onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"graceful-hyprshutdown --post-cmd 'systemctl poweroff' --top-label 'Shutting down...'\")")
             KeyNavigation.left: power1
             KeyNavigation.right: power3
         }
@@ -130,7 +162,7 @@ PanelWindow {
             id: power3
             icon: "\uf021"
             label: "Reboot"
-            onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"hyprshutdown --post-cmd 'systemctl reboot'\")")
+            onClick: Hyprland.dispatch("hl.dsp.exec_cmd(\"graceful-hyprshutdown --post-cmd 'systemctl reboot' --top-label 'Rebooting...'\")")
             KeyNavigation.left: power2
             KeyNavigation.right: power1
         }

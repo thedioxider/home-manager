@@ -1,6 +1,37 @@
 { pkgs, inputs, ... }:
 let
   hyprcapture = pkgs.callPackage ./hyprcapture { inherit inputs pkgs; };
+  graceful-hyprshutdown = pkgs.writeShellApplication {
+    name = "graceful-hyprshutdown";
+    runtimeInputs = with pkgs; [ hyprshutdown ];
+    text = ''
+      if [ -z "''${GRACEFUL_HS_DETACHED:-}" ]; then
+        GRACEFUL_HS_DETACHED=1 exec setsid -f "$0" "$@" </dev/null >/dev/null 2>&1
+      fi
+
+      post_cmd=""
+      args=()
+      while [ $# -gt 0 ]; do
+        case "$1" in
+          -p | --post-cmd)
+            post_cmd="$2"
+            shift 2
+            ;;
+          *)
+            args+=("$1")
+            shift
+            ;;
+        esac
+      done
+
+      marker=$(mktemp -t hyprshutdown-XXXXXX.done)
+      rm -f "$marker"
+      hyprshutdown --no-fork --post-cmd "touch $marker; $post_cmd" "''${args[@]}"
+      sleep 0.5
+      [ -e "$marker" ] && exit 0
+      systemctl --user start quickshell.service awww.service
+    '';
+  };
 in
 {
   imports = [
@@ -32,12 +63,12 @@ in
 
   home.packages = [
     hyprcapture
+    graceful-hyprshutdown
   ]
   ++ (with pkgs; [
     gpu-screen-recorder
     hyprland-qtutils
     hyprland-protocols
-    hyprshutdown
 
     waypaper
 
