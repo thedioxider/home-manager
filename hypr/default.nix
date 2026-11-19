@@ -67,7 +67,7 @@ in
   ]
   ++ (with pkgs; [
     gpu-screen-recorder
-    hyprland-qtutils
+    hyprland-guiutils
     hyprland-protocols
 
     waypaper
