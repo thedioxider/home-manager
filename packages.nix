@@ -53,6 +53,7 @@
     qdirstat
     deno
     qbittorrent
+    busybox
   ])
   ++ (with pkgs; [
     telegram-desktop
